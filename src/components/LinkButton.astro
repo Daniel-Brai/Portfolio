@@ -1,0 +1,34 @@
+---
+export interface Props {
+  href: string;
+  className?: string;
+  ariaLabel?: string;
+  title?: string;
+  disabled?: boolean;
+  target?: string;
+  noDecorate?: boolean;
+}
+
+const {
+  href,
+  className,
+  ariaLabel,
+  title,
+  disabled = false,
+  target = "_blank",
+  noDecorate = true,
+} = Astro.props;
+---
+
+<a
+  type="button"
+  href={disabled ? "#" : href}
+  tabindex={disabled ? "-1" : "0"}
+  class={`${!noDecorate ? `group ${className}` : `group unset ${className}`}`}
+  aria-label={ariaLabel}
+  title={title}
+  aria-disabled={disabled}
+  target={target}
+>
+  <slot />
+</a>

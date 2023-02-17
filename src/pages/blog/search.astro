@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import { SITE_TITLE } from "../../consts";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Search from "../../components/Search";
+import BaseHead from "../../components/BaseHead.astro";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+const searchList = posts.map(({ data }) => ({
+  title: data.title,
+  description: data.description,
+  data,
+}));
+---
+
+<PageLayout>
+  <BaseHead
+    title={`Search | ${SITE_TITLE}`}
+    description={"Search for my articles, projects"}
+  />
+  <Fragment slot="main">
+    <main>
+      <Search client:load searchList={searchList} />
+    </main>
+  </Fragment>
+</PageLayout>

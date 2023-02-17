@@ -1,0 +1,79 @@
+---
+import { SOCIALS } from "../consts";
+import LinkButton from "./LinkButton.astro";
+import { socialIcons } from "../assets/social";
+
+export interface Props {
+  centered?: boolean;
+  noMarginTop?: boolean;
+}
+
+const { centered = false, noMarginTop = false } = Astro.props;
+const today = new Date();
+---
+
+<footer
+  class={`${
+    noMarginTop
+      ? "space-y-1 text-center leading-[1.75] text-sm p-3"
+      : "mt-auto space-y-1 text-center leading-[1.75] text-sm p-3"
+  }`}
+>
+  <div class={`social-icons ${centered ? "flex" : ""}`}>
+    {
+      SOCIALS.filter((social) => social.active).map((social) => (
+        <LinkButton
+          href={social.href}
+          className="social-button underline-none"
+          title={social.linkTitle}
+        >
+          <Fragment set:html={socialIcons[social.name]} />
+        </LinkButton>
+      ))
+    }
+  </div>
+  <p>&copy; {today.getFullYear()} Daniel Brai</p>
+  <p>
+    Built with
+    <a
+      href="https://astro.build"
+      class="unset gradient-link bg-gradient-to-r from-[#f57111] to-[#f79605] bg-clip-text font-bold tracking-wider text-transparent hover:after:bg-gradient-to-r hover:after:from-[#f57111] hover:after:to-[#f79605]"
+      >Astro</a
+    >
+    and
+    <a
+      href="https://tailwindcss.com"
+      class="unset gradient-link bg-gradient-to-r from-[#00abda] to-[#1476ff] bg-clip-text font-bold tracking-wider text-transparent hover:after:bg-gradient-to-r hover:after:from-[#00abda] hover:after:to-[#1476ff]"
+      >TailwindCSS</a
+    >
+  </p>
+</footer>
+<style>
+  .social-icons {
+    @apply justify-center gap-1;
+  }
+  .social-button {
+    @apply p-2 sm:p-1;
+  }
+  .gradient-link {
+    position: relative;
+    box-decoration-break: clone;
+    text-decoration: none;
+  }
+
+  .gradient-link:hover:after {
+    transform: translateZ(0) scale(1);
+  }
+
+  .gradient-link:after {
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    content: "";
+    height: 2px;
+    position: absolute;
+    transform: translateZ(0) scaleX(0);
+    transform-origin: left center;
+    transition: all 0.15s ease-in-out;
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+import { SITE_TITLE, POSTS_PER_PAGE } from "../../consts";
+import BaseHead from "../../components/BaseHead.astro";
+import Search from "../../components/Search";
+import Posts from "../../components/Posts.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import getSortedPosts from "../../utils/getSortedPosts";
+import getPageNumbers from "../../utils/getPageNumber";
+
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const sortedPosts = getSortedPosts(posts);
+const totalPages = getPageNumbers(sortedPosts.length);
+const paginatedPosts = sortedPosts.slice(0, POSTS_PER_PAGE);
+
+const searchList = sortedPosts.map(({ data }) => ({
+  title: data.title,
+  description: data.description,
+  data,
+}));
+---
+
+<PageLayout>
+  <BaseHead
+    title={`${SITE_TITLE} | Blog`}
+    description={"A repository of all the things I love as an aspiring Software Engineer"}
+  />
+  <Fragment slot="main">
+    <main>
+      <Search client:load searchList={searchList} />
+      <Posts
+        posts={paginatedPosts}
+        pageNum={1}
+        totalPages={totalPages.length}
+      />
+    </main>
+  </Fragment>
+</PageLayout>

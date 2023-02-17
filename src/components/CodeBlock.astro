@@ -1,0 +1,17 @@
+---
+import { Code } from "astro/components";
+
+import type * as shiki from "shiki";
+
+export interface Props {
+  code: string;
+  lang: shiki.Lang | shiki.ILanguageRegistration;
+  theme?: string;
+}
+
+const { code, lang, theme = "github-dark" } = Astro.props;
+---
+
+<div class="mt-4 mb-4">
+  <Code code={code} lang={lang} theme={theme} />
+</div>

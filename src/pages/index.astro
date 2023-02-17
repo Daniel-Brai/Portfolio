@@ -1,0 +1,141 @@
+---
+import { getCollection } from "astro:content";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_STATUS_API_URL } from "../consts";
+import BaseHead from "../components/BaseHead.astro";
+import LinkButton from "../components/LinkButton.astro";
+import PostCard from "../components/PostCard.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import getSortedPosts from "../utils/getSortedPosts";
+import { slugifyPost } from "../utils/slugify";
+import $getReadingTime from "../utils/getReadingTime";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = getSortedPosts(posts);
+
+const status_api = await fetch(SITE_STATUS_API_URL)
+  .then((r) => r.json())
+  .catch((e) => console.log(e.msg));
+---
+
+<PageLayout>
+  <BaseHead title={`${SITE_TITLE} | Home`} description={SITE_DESCRIPTION} />
+  <Fragment slot="main">
+    <main>
+      <section class="mt-10" id="intro">
+        <div
+          class="mx-auto mb-6 flex w-fit items-center rounded-full bg-gray-50 px-1 py-[3px] text-[12.5px] dark:bg-neutral-700 sm:text-sm"
+        >
+          <span class="rounded-full bg-[rgb(51,154,240)] px-1.5 py-0.5">
+            {status_api ? status_api.emoji : "👨‍💻"}
+          </span>
+          <span class="ml-1.5 mr-0.5">
+            {status_api ? status_api.message : "I'm currently coding"}
+          </span>
+        </div>
+        <h1 class="text-[26px] font-semibold sm:text-3xl">
+          Hello, I am Daniel
+        </h1>
+        <p class="mt-1.5">
+          I am an aspiring, passionate Software Engineer who loves to learn new
+          things and solve problems linked with business functions
+        </p>
+        <div class="mt-1.5 flex items-center space-x-6">
+          <a class="inline-block" href="/about"> About</a>
+          <a
+            title="Daniel Brai's Resume"
+            class="unset inline-block"
+            href="/resume.pdf"
+            download
+          >
+            <div class="flex">
+              <span>Resume</span>
+              <svg
+                class="rotate-45 dark:fill-white"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                ><path
+                  d="M11 8.414V18h2V8.414l4.293 4.293 1.414-1.414L12 4.586l-6.707 6.707 1.414 1.414z"
+                ></path></svg
+              >
+            </div>
+          </a>
+        </div>
+      </section>
+      <section id="recent-posts">
+        <h2>Writing</h2>
+        <p class="mt-1.5">
+          A collection of my thoughts or experiments with the certain
+          technologies driven by my curiosity to learn. Below are some of my
+          recent writeups
+        </p>
+        <ul>
+          {
+            sortedPosts.map(
+              (post, index) =>
+                index < 3 && (
+                  <PostCard
+                    href={`/blog/${slugifyPost(post.data)}`}
+                    frontmatter={post.data}
+                    readTime={$getReadingTime(post.body)}
+                  />
+                )
+            )
+          }
+        </ul>
+        <div class="all-posts-btn-wrapper">
+          <LinkButton
+            className={"flex items-center"}
+            href="/blog"
+            target={"_self"}
+          >
+            <p>All Articles</p>
+            <svg
+              class="dark:fill-white"
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              ><path
+                d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+              ></path>
+            </svg>
+          </LinkButton>
+        </div>
+      </section>
+      <section class="mt-6 mb-10" id="my-tools">
+        <h2 class="text-xl font-semibold tracking-wide sm:text-2xl">
+          My Tools
+        </h2>
+        <p class="mt-1.5">
+          Some of the major tools I love and have worked with:
+        </p>
+        <div class="mt-4">
+          <ul>
+            <li>
+              <span class="text-lg font-medium">Node JS</span>
+            </li>
+            <li>
+              <span class="text-lg font-medium">Django</span>
+            </li>
+            <li>
+              <span class="font- text-lg">Ruby on rails</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </Fragment>
+</PageLayout>
+
+<style>
+  #recent-posts {
+    @apply pt-12 pb-6;
+  }
+  #recent-posts h2 {
+    @apply text-xl font-semibold tracking-wide sm:text-2xl;
+  }
+  .all-posts-btn-wrapper {
+    @apply my-4 flex justify-center text-center;
+  }
+</style>

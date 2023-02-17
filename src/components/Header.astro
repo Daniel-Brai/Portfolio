@@ -1,0 +1,33 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header>
+  <a
+    class="unset absolute left-[50%] -top-[100rem] z-10 translate-x-[-50%] bg-white px-8 py-2 text-black focus:top-[initial]"
+    href="#main"
+  >
+    Skip to content
+  </a>
+  <nav>
+    <section class="text-text-bold">
+      <ul class="unset flex gap-4 [&>li]:p-0">
+        <li><HeaderLink href="/">Home</HeaderLink></li>
+        <li><HeaderLink href="/blog">Blog</HeaderLink></li>
+        <li><HeaderLink href="/projects">Projects</HeaderLink></li>
+      </ul>
+    </section>
+  </nav>
+  <div class="flex content-center items-center justify-self-end text-text-bold">
+    <ThemeToggle />
+  </div>
+</header>
+<style>
+  header {
+    grid-area: header;
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
+  }
+</style>

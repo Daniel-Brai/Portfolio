@@ -1,0 +1,42 @@
+---
+import { SITE_TITLE } from "../consts";
+import BaseHead from "../components/BaseHead.astro";
+import PageLayout from "./PageLayout.astro";
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    heroImage?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<PageLayout>
+  <BaseHead
+    title={`About | ${SITE_TITLE}`}
+    description={frontmatter.description}
+  />
+  <Fragment slot="main">
+    <main class="mt-10 lg:mt-20" id="main">
+      <section id="about" class="mb-28 max-w-3xl prose-img:border-0">
+        <h1 class="text-2xl tracking-wider sm:text-3xl">{frontmatter.title}</h1>
+        <img
+          class="my-6 rounded-lg"
+          src={frontmatter.heroImage}
+          alt="Hero Image for About me page"
+        />
+        <slot />
+      </section>
+    </main>
+  </Fragment>
+</PageLayout>
+
+<script>
+  const ps = document.querySelectorAll("p");
+  ps.forEach((p) => {
+    p.style.marginBottom = "16px";
+  });
+</script>

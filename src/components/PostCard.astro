@@ -6,9 +6,10 @@ export interface Props {
   href?: string;
   frontmatter: BlogFrontmatter;
   readTime?: string;
+  presentTags?: boolean;
 }
 
-const { href, frontmatter, readTime } = Astro.props;
+const { href, frontmatter, readTime, presentTags = false } = Astro.props;
 ---
 
 <div>
@@ -19,7 +20,7 @@ const { href, frontmatter, readTime } = Astro.props;
     >
       {frontmatter.title}
     </a>
-    <div class={`${readTime ? "flex items-center space-x-2" : ""}`}>
+    <div class={`${readTime ? `flex flex-wrap items-center space-x-2` : ""}`}>
       <DateTime date={frontmatter.pubDate} />
       {
         readTime ? (
@@ -39,6 +40,18 @@ const { href, frontmatter, readTime } = Astro.props;
           ""
         )
       }
+      <!-- <div class={`${presentTags == true ? "flex flex-wrap items-center space-x-2" : "hidden"}`}>
+        {
+          frontmatter.tags.map((tag) => {
+            <a 
+              class="unset"
+              href={`/tags/${tag.toLowerCase()}`}
+            >
+              {tag}
+            </a>
+          }
+        )}
+      </div> -->
     </div>
     <p class="text-[14.5px] sm:text-base">{frontmatter.description}</p>
   </li>

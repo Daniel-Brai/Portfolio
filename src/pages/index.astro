@@ -79,6 +79,7 @@ const status_api = await fetch(SITE_STATUS_API_URL)
                     href={`/blog/${slugifyPost(post.data)}`}
                     frontmatter={post.data}
                     readTime={$getReadingTime(post.body)}
+                    presentTags={false}
                   />
                 )
             )
@@ -113,13 +114,13 @@ const status_api = await fetch(SITE_STATUS_API_URL)
         <div class="mt-4">
           <ul>
             <li>
-              <span class="text-lg font-medium">Node JS</span>
+              <span class="text-base font-medium">Node JS</span>
             </li>
             <li>
-              <span class="text-lg font-medium">Django</span>
+              <span class="text-base font-medium">Django</span>
             </li>
             <li>
-              <span class="font- text-lg">Ruby on rails</span>
+              <span class="text-base font-medium">Ruby on rails</span>
             </li>
           </ul>
         </div>

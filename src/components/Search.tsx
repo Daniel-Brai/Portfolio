@@ -1,6 +1,5 @@
 import Fuse from "fuse.js";
 import { useEffect, useState, useRef } from "react";
-// import PostCard from "../components/PostCard.astro";
 import { slugifyPost } from "../utils/slugify";
 import type { BlogFrontmatter } from "../content/_schema";
 
@@ -17,6 +16,31 @@ interface Props {
 interface SearchResult {
   item: SearchItem;
   refIndex: number;
+}
+
+function SearchItemList({item, refIndex}: SearchResult) {
+  return <>
+    <li key={`${refIndex}`}>
+      <a
+        className=""
+        href={`/blog/${slugifyPost(item.data)}`}
+        key={`${refIndex}-${slugifyPost(item.data)}`}
+      >
+        <span
+          key={`${refIndex - 2}-${slugifyPost(item.data)}-2`}
+          className="text-sm"
+        >
+          {item.title}
+        </span>
+      </a>
+      <p
+        key={`${refIndex - 3}-${slugifyPost(item.data)}-3`}
+        className="text-xs"
+      >
+        {item.description}
+      </p>
+    </li>
+  </>
 }
 
 export default function SearchBar({ searchList }: Props) {
@@ -109,9 +133,9 @@ export default function SearchBar({ searchList }: Props) {
         </div>
       </div>
 
-      <div className="mb-5 rounded-md bg-[#171717] py-3 px-2">
+      <div className={ inputVal.length > 1 ? "mt-3 mb-5 rounded-md bg-gray-100 dark:bg-[#171717] py-3 px-2" : ""}>
         {inputVal.length > 1 && (
-          <div className="mt-8 text-[14px]">
+          <div className="mt-4 text-[14px]">
             Found {searchResults?.length}
             {searchResults?.length && searchResults?.length === 1
               ? " result"
@@ -123,28 +147,7 @@ export default function SearchBar({ searchList }: Props) {
         <ul>
           {searchResults &&
             searchResults.map(({ item, refIndex }) => (
-              <>
-                <li key={`${refIndex * 2}-${slugifyPost(item.data)}-0`}>
-                  <a
-                    className=""
-                    href={`/blog/${slugifyPost(item.data)}`}
-                    key={`${refIndex}-${slugifyPost(item.data)}-1`}
-                  >
-                    <span
-                      key={`${refIndex - 2}-${slugifyPost(item.data)}-2`}
-                      className="text-sm"
-                    >
-                      {item.title}
-                    </span>
-                  </a>
-                  <p
-                    key={`${refIndex ** 3}-${slugifyPost(item.data)}-3`}
-                    className="text-xs"
-                  >
-                    {item.description}
-                  </p>
-                </li>
-              </>
+              <SearchItemList key={refIndex} item={item} refIndex={refIndex} />
             ))}
         </ul>
       </div>

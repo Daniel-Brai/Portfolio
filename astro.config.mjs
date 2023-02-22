@@ -6,9 +6,11 @@ import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
 import react from "@astrojs/react";
 
+import { SITE_LINK } from './src/consts';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'http://localhost:3000',
+  site: SITE_LINK,
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, {
       test: "Table of contents"

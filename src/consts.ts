@@ -1,5 +1,6 @@
 import type { SocialObjects } from "./types";
 export const SITE_TITLE = 'Daniel Brai';
+export const SITE_LINK = 'https://braidaniel.netlify.app/'
 export const SITE_DESCRIPTION = "Daniel Brai's Porfolio website";
 export const SITE_STATUS_API_URL = "http://localhost:5000/api"
 export const POSTS_PER_PAGE: number = 4;

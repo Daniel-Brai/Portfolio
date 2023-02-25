@@ -5,8 +5,9 @@ import tailwind from '@astrojs/tailwind';
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
 import react from "@astrojs/react";
-
 import { SITE_LINK } from './src/consts';
+
+// https://astro.build/config
 
 // https://astro.build/config
 export default defineConfig({

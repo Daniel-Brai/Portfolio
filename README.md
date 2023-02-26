@@ -1,5 +1,5 @@
 # Daniel_Brai
-A portfolio website consisting of a blog, projects and general overview section of myself
+A portfolio website consisting of a blog, projects and general overview section of myself (to be filled with actual data on or before April)
 
 # How to use
 - Live deployment: https://danielbrai.ninja

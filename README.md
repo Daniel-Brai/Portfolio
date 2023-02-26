@@ -2,7 +2,7 @@
 A portfolio website consisting of a blog, projects and general overview section of myself
 
 # How to use
-- Live deployment: https://braidaniel.netlify.app
+- Live deployment: https://danielbrai.ninja
 - Local deployment:
 1. Download or clone this repository on your computer.
 2. Run the command: `npm i` to install dependencies.

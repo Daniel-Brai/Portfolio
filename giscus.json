@@ -1,4 +1,4 @@
 {
-  "origins": ["http://localhost:3000","https://braidaniel.netlify.app"],
+  "origins": ["http://localhost:3000","https://braidaniel.netlify.app", "https://danielbrai.ninja/", "https://www.danielbrai.ninja/"],
   "defaultCommentOrder": "newest"
 }

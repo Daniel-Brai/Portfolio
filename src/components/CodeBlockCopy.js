@@ -64,7 +64,7 @@ export class CodeBlockCopyButton extends LitElement {
     }
     render() {
         return html`
-        <button @click=${this.copyCode}>${this._isCopied === true ? checkIcon: copyIcon}</button>
+            <button @click=${this.copyCode}>${this._isCopied === true ? checkIcon: copyIcon}</button>
         `;
     }
 }

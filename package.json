@@ -11,6 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/lit": "^1.2.0",
     "@astrojs/mdx": "^0.16.0",
     "@astrojs/react": "^2.0.2",
     "@astrojs/rss": "^2.1.0",
@@ -20,9 +21,11 @@
     "@types/github-slugger": "^2.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.10",
+    "@webcomponents/template-shadowroot": "^0.1.0",
     "astro": "^2.0.6",
     "fuse.js": "^6.6.2",
     "github-slugger": "^2.0.0",
+    "lit": "^2.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reading-time": "^1.5.0",

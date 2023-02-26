@@ -1,5 +1,6 @@
 ---
 import { Code } from "astro/components";
+import { CodeBlockCopyButton } from './CodeBlockCopy.js';
 
 import type * as shiki from "shiki";
 
@@ -12,6 +13,25 @@ export interface Props {
 const { code, lang, theme = "github-dark" } = Astro.props;
 ---
 
-<div class="mt-4 mb-4">
+<div class="my-4 relative">
+  <CodeBlockCopyButton client:load />
   <Code code={code} lang={lang} theme={theme} />
 </div>
+
+<script is:inline>
+  const code_containers = document.querySelectorAll(".astro-code");
+  const code_blocks = document.querySelectorAll(".astro-code > code");
+  if (code_containers != null) {
+    code_containers.forEach(cc => {
+      cc.style.borderRadius = "12px";
+    })
+  }
+  if (code_blocks != null) {
+    code_blocks.forEach(cb => {
+      cb.style.fontFamily = "Roboto mono";
+      cb.style.fontSize = "16px";
+      cb.style.position = "relative";
+      cb.style.top = "-16px";
+    })
+  }
+</script>

@@ -147,11 +147,6 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
   const deet = document.querySelector("article > details");
   const toc = document.querySelector("details > summary");
   const toch = document.querySelector("#table-of-contents");
-  const code = document.querySelector(".astro-code");
-  const code1 = document.querySelector(".astro-code > code");
-  if (code != null) {
-    code.style.borderRadius = "12px";
-  }
   if (deet != null) {
     deet.style.marginBottom = "24px";
   }
@@ -160,12 +155,6 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
   }
   if (toch != null) {
     toch.style.display = "none";
-  }
-  if (code1 != null) {
-    code1.style.fontFamily = "Roboto mono";
-    code1.style.fontSize = "16px";
-    code1.style.position = "relative";
-    code1.style.top = "-16px";
   }
 </script>
 <style>

@@ -10,6 +10,9 @@ import { SITE_LINK } from './src/consts';
 // https://astro.build/config
 
 // https://astro.build/config
+import lit from "@astrojs/lit";
+
+// https://astro.build/config
 export default defineConfig({
   site: SITE_LINK,
   markdown: {
@@ -29,5 +32,5 @@ export default defineConfig({
     config: {
       applyBaseStyles: false
     }
-  }), react()]
+  }), react(), lit()]
 });

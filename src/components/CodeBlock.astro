@@ -33,6 +33,7 @@ const { code, lang, theme = "github-dark" } = Astro.props;
       cb.style.position = "relative";
       cb.style.top = "-16px";
       cb.style.transition = "none";
+      cb.setAttribute("class", "code-block");
     })
   }
 </script>

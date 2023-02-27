@@ -170,12 +170,15 @@
         margin-bottom: 0.5em;
     }
 
-    /* ::selection {
+    ::selection {
         background: theme('colors.bg.selection');
         color: theme('colors.text.selection');
-    } */
+    }
 
-    
+    .code-block ::selection {
+        background: transparent;
+    }
+ 
     .animated-link {
         position: relative;
         box-decoration-break: clone;

@@ -170,10 +170,10 @@
         margin-bottom: 0.5em;
     }
 
-    ::selection {
+    /* ::selection {
         background: theme('colors.bg.selection');
         color: theme('colors.text.selection');
-    }
+    } */
 
     
     .animated-link {

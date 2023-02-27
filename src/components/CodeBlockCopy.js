@@ -31,16 +31,20 @@ export class CodeBlockCopyButton extends LitElement {
             }
         `
     ];
+
     static get properities() {
         return {
-            _isCopied: { type: Boolean }
+            isCopied: { type: Boolean, reflect: true }
         }
     }
+
     constructor() {
         super();
-        this._isCopied = false;
+        this.isCopied = false;
     }
+
     copyCode() {
+        this.isCopied = true;
         let code = document.querySelector('code');
         const range = document.createRange();
         range.selectNode(code);
@@ -52,20 +56,24 @@ export class CodeBlockCopyButton extends LitElement {
         } else {
             try {
                 navigator.clipboard.writeText(range.toString())
-                this._isCopied = true;
             } catch (e) {
                 console.error(e);
             }
         }
         window.getSelection().removeAllRanges();
-
-        setTimeout(() => { this._isCopied = false }, 1500)
-
+        setTimeout(() => { this.isCopied = false }, 1500);
     }
+    
     render() {
-        return html`
-            <button @click=${this.copyCode}>${this._isCopied === true ? checkIcon: copyIcon}</button>
-        `;
+        if (this.isCopied === true) {
+            return html`
+            <button>${checkIcon}</button>
+           `;
+        } else {
+            return html`
+            <button @click="${() => { this.copyCode } }">${copyIcon}</button>
+            `;
+        }
     }
 }
 

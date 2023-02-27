@@ -7,10 +7,6 @@ import remarkCollapse from "remark-collapse";
 import react from "@astrojs/react";
 import { SITE_LINK } from './src/consts';
 
-// https://astro.build/config
-
-// https://astro.build/config
-import lit from "@astrojs/lit";
 
 // https://astro.build/config
 export default defineConfig({
@@ -32,5 +28,5 @@ export default defineConfig({
     config: {
       applyBaseStyles: false
     }
-  }), react(), lit()]
+  }), react()]
 });

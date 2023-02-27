@@ -1,6 +1,6 @@
 ---
 import { Code } from "astro/components";
-import { CodeBlockCopyButton } from './CodeBlockCopy.js';
+import CodeCopy from './CodeCopy.astro'
 
 import type * as shiki from "shiki";
 
@@ -14,7 +14,7 @@ const { code, lang, theme = "github-dark" } = Astro.props;
 ---
 
 <div class="my-4 relative">
-  <CodeBlockCopyButton client:load />
+  <CodeCopy />
   <Code code={code} lang={lang} theme={theme} />
 </div>
 

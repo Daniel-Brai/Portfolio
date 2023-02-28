@@ -41,6 +41,14 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
   <Fragment slot="main">
     <main id="main">
       <div class="relative">
+        <button 
+          onclick="document.querySelector('html').scrollIntoView({ behaviour: 'smooth' })" 
+          title="Scroll to top" 
+          id="stt-btn"
+          class="p-1 border border-gray-800 dark:border-white fixed bottom-6 right-1 sm:right-4 md:right-10 z-20"
+        >
+          <svg class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M13 18v-6h5l-6-7-6 7h5v6z"/></svg>
+        </button>
         <button
           class="focus-outline mt-8 mb-3 flex items-center hover:opacity-75"
           onclick="history.back()"
@@ -136,6 +144,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
 <script is:inline>
   const ps = document.querySelectorAll("p");
   const h2s = document.querySelectorAll("h2");
+  const comment = document.querySelector('#comments')
   const details = document.querySelector("article > details");
   const tocc = document.querySelector("details > summary");
   const toch = document.querySelector("#table-of-contents");
@@ -212,8 +221,25 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
   if (toch != null) {
     toch.style.display = "none";
   }
+
+  if (comment !== null) {
+    function callback(entries, observer) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelector('#stt-btn').classList.toggle('hidden');
+        } else {
+          document.querySelector('#stt-btn').classList.toggle('hidden');
+        }
+      })
+    }
+    let observer = new IntersectionObserver(callback);
+    observer.observe(comment)
+  }
 </script>
 <style>
+  html, body {
+    @apply scroll-smooth;
+  }
   details {
     padding: 4px 8px;
     background-color: #171717;

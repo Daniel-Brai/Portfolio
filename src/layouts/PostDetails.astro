@@ -117,7 +117,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
             <img src={heroImage} alt="Article's Hero Image" loading="eager" />
             <div class="mt-4 flex flex-col justify-center space-y-2"></div>
           </div>
-          <article id="article" role="article" class="mt-9">
+          <article id="article" role="article" class="mt-8">
             <Content />
           </article>
 
@@ -135,24 +135,80 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
 
 <script is:inline>
   const ps = document.querySelectorAll("p");
+  const h2s = document.querySelectorAll("h2");
+  const details = document.querySelector("article > details");
+  const tocc = document.querySelector("details > summary");
+  const toch = document.querySelector("#table-of-contents");
+  const code_containers = document.querySelectorAll("pre");
+  const code_blocks = document.querySelectorAll("pre code");
+
+  let isCopied = false;
+  const copybtns = document.querySelectorAll(".code-copy-btn");
+  const copyIcon =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFFFFF"><path d="M20 2H10c-1.103 0-2 .897-2 2v4H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2v-4h4c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zM4 20V10h10l.002 10H4zm16-6h-4v-4c0-1.103-.897-2-2-2h-4V4h10v10z"/></svg>';
+  const checkIcon =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00FF00"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"/></svg>';
+
+  code_blocks.forEach((cb) => {
+    cb.style.fontFamily = "Roboto mono";
+    cb.style.fontSize = "16px";
+    cb.style.position = "relative";
+    cb.style.top = "-16px";
+    cb.classList.add('no-select');
+  });
+
+  copybtns.forEach((copybtn) => {
+    if (copybtn !== null) {
+      copybtn.addEventListener("click", async () => {
+        let div = copybtn.parentNode;
+        isCopied = true;
+        const range = document.createRange();
+        range.selectNode(div);
+        window.getSelection().addRange(range);
+
+        if (!navigator.clipboard) {
+          document.execCommand("copy");
+        } else {
+          try {
+            await navigator.clipboard.writeText(range.toString());
+            copybtn.innerHTML = checkIcon;
+          } catch (e) {
+            console.error(e);
+          }
+        }
+        window.getSelection().removeAllRanges();
+
+        setTimeout(() => {
+          isCopied = false;
+          copybtn.innerHTML = copyIcon;
+        }, 1500);
+      });
+    }
+  });
+
+  code_containers.forEach((cc) => {
+    cc.style.borderRadius = "12px";
+    cc.classList.add('no-select');
+  });
+
   ps.forEach((p) => {
     p.style.marginBottom = "16px";
   });
-  const h2s = document.querySelectorAll("h2");
+
   h2s.forEach((h) => {
     h.style.marginBottom = "6px";
     h.style.fontSize = "24px";
     h.style.fontWeight = "500";
   });
-  const deet = document.querySelector("article > details");
-  const toc = document.querySelector("details > summary");
-  const toch = document.querySelector("#table-of-contents");
-  if (deet != null) {
-    deet.style.marginBottom = "24px";
+
+  if (details != null) {
+    details.style.marginBottom = "24px";
   }
-  if (toc != null) {
-    toc.textContent = "Table of contents";
+
+  if (tocc != null) {
+    tocc.textContent = "Table of contents";
   }
+
   if (toch != null) {
     toch.style.display = "none";
   }

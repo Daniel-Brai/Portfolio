@@ -1,5 +1,6 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import Comments from "../components/Comments.astro";
 import DateTime from "../components/DateTime.astro";
 import PageLayout from "./PageLayout.astro";
 
@@ -60,6 +61,9 @@ const ogUrl = new URL(`/projects/${slug}`, Astro.url.origin).href;
           <article id="article" role="article" class="mt-9">
             <Content />
           </article>
+        </section>
+        <section class="my-8" id="comments">
+          <Comments />
         </section>
       </div>
     </main>

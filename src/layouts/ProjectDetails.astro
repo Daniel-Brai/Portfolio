@@ -1,5 +1,6 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import Comments from "../components/Comments.astro";
 import DateTime from "../components/DateTime.astro";
 import PageLayout from "./PageLayout.astro";
 
@@ -75,6 +76,7 @@ const ogUrl = new URL(`/projects/${slug}`, Astro.url.origin).href;
     h.style.fontSize = "24px";
     h.style.fontWeight = "500";
   });
+  const comment = document.querySelector('#comments')
   const deet = document.querySelector("article > details");
   const toc = document.querySelector("details > summary");
   const toch = document.querySelector("#table-of-contents");
@@ -97,6 +99,19 @@ const ogUrl = new URL(`/projects/${slug}`, Astro.url.origin).href;
     code1.style.fontSize = "16px";
     code1.style.position = "relative";
     code1.style.top = "-16px";
+  }
+  if (comment !== null) {
+    function callback(entries, observer) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelector('#stt-btn').classList.toggle('hidden');
+        } else {
+          document.querySelector('#stt-btn').classList.toggle('hidden');
+        }
+      })
+    }
+    let observer = new IntersectionObserver(callback);
+    observer.observe(comment)
   }
 </script>
 

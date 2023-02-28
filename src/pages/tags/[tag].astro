@@ -39,7 +39,7 @@ const tagPosts = getPostsByTag(posts, tag);
     description={`A repository of all the things I written with a tag of ${tag} on the article`}
   />
   <Fragment slot="main">
-    <main>
+    <div>
       <h1 class="mt-7 text-3xl font-medium">Tag: {tag}</h1>
       <p class="mt-8 text-lg">All Articles with the tag: {tag}</p>
       <ul>
@@ -49,6 +49,6 @@ const tagPosts = getPostsByTag(posts, tag);
           ))
         }
       </ul>
-    </main>
+    </div>
   </Fragment>
 </PageLayout>

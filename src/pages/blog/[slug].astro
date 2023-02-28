@@ -59,13 +59,11 @@ const paginatedPosts = sortedPosts.slice(startPost, lastPost);
         }
       />
       <Fragment slot="main">
-        <main>
-          <Posts
-            posts={paginatedPosts}
-            pageNum={currentPage}
-            totalPages={totalPages.length}
-          />
-        </main>
+        <Posts
+          posts={paginatedPosts}
+          pageNum={currentPage}
+          totalPages={totalPages.length}
+        />
       </Fragment>
     </PageLayout>
   )

@@ -27,13 +27,13 @@ const searchList = sortedPosts.map(({ data }) => ({
     description={"A repository of all the things I love as an aspiring Software Engineer"}
   />
   <Fragment slot="main">
-    <main>
+    <section>
       <Search client:load searchList={searchList} />
       <Posts
         posts={paginatedPosts}
         pageNum={1}
         totalPages={totalPages.length}
       />
-    </main>
+    </section>
   </Fragment>
 </PageLayout>

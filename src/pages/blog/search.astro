@@ -20,8 +20,6 @@ const searchList = posts.map(({ data }) => ({
     description={"Search for my articles, projects"}
   />
   <Fragment slot="main">
-    <main>
-      <Search client:load searchList={searchList} />
-    </main>
+    <Search client:load searchList={searchList} />
   </Fragment>
 </PageLayout>

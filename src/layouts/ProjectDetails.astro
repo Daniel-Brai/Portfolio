@@ -22,47 +22,45 @@ const ogUrl = new URL(`/projects/${slug}`, Astro.url.origin).href;
 
 <PageLayout>
   <BaseHead
-    title={`${title} | Project - Daniel Brai`}
+    title={`${title} | Projects - Daniel Brai`}
     description={description}
   />
   <Fragment slot="main">
-    <main id="main">
-      <div class="relative">
-        <button
-          class="focus-outline mt-8 mb-3 flex items-center hover:opacity-75"
-          onclick="history.back()"
-        >
-          <svg
-            class="dark:fill-white"
-            width="24"
-            height="24"
-            xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
-            ></path>
-          </svg>
-          <span>Go back</span>
-        </button>
-        <section>
-          <h1 class="post-title">{title}</h1>
-          <div class="mt-5">
-            <img
-              src={heroImage}
-              alt=`${title} Project's Hero Image`
-              loading="eager"
-            />
-            <span
-              title=`${title} description`
-              class="mx-auto mt-3 rounded-lg bg-gray-100 px-3 py-1.5 text-center text-sm dark:bg-neutral-900"
-              >/**{description}**/</span
-            >
-          </div>
-          <article id="article" role="article" class="mt-9">
-            <Content />
-          </article>
-        </section>
+    <section class="relative">
+      <button
+        class="focus-outline mt-8 mb-3 flex items-center hover:opacity-75"
+        onclick="history.back()"
+      >
+        <svg
+          class="dark:fill-white"
+          width="24"
+          height="24"
+          xmlns="http://www.w3.org/2000/svg"
+          ><path
+            d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+          ></path>
+        </svg>
+        <span>Go back</span>
+      </button>
+      <div>
+        <h1 class="post-title">{title}</h1>
+        <div class="mt-5">
+          <img
+            src={heroImage}
+            alt={`${title} Project's Hero Image`}
+            loading="eager"
+          />
+          <span
+            title={`${title} description`}
+            class="mx-auto mt-3 rounded-lg bg-gray-100 px-3 py-1.5 text-center text-sm dark:bg-neutral-900"
+            >/**{description}**/</span
+          >
+        </div>
+        <article id="article" role="article" class="mt-9">
+          <Content />
+        </article>
       </div>
-    </main>
+    </section>
   </Fragment>
 </PageLayout>
 

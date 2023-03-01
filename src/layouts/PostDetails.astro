@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Comments from "../components/Comments.astro";
 import DateTime from "../components/DateTime.astro";
 import LinkButton from "../components/LinkButton.astro";
+import ShareArticleButton from "../components/ShareArticleButton.astro";
 import PageLayout from "./PageLayout.astro";
 import Tag from "../components/Tag.astro";
 
@@ -44,7 +45,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
         onclick="document.querySelector('html').scrollIntoView({ behaviour: 'smooth' })" 
         title="Scroll to top" 
         id="stt-btn"
-        class="p-1 border border-gray-800 dark:border-white fixed bottom-6 right-2 sm:right-4 md:right-10 z-20"
+        class="p-1 border border-gray-800 dark:border-white fixed bottom-10 right-2 sm:right-4 md:right-10 z-20 rounded-lg"
       >
         <svg class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M13 18v-6h5l-6-7-6 7h5v6z"/></svg>
       </button>
@@ -131,6 +132,15 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
         <ul class="tags-container unset">
           {tags.map((tag) => <Tag name={tag} />)}
         </ul>
+        <div id="share-section" class="mb-4">
+          <ShareArticleButton 
+            title={title} 
+            author={"@daniel_brai"} 
+            description={description} 
+            url={ogUrl}
+            siteName={"Daniel Brai | Blog"}
+          />
+        </div>
       </section>
       <section class="my-8" id="comments">
         <Comments />
@@ -142,7 +152,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
 <script is:inline>
   const ps = document.querySelectorAll("p");
   const h2s = document.querySelectorAll("h2");
-  const comment = document.querySelector('#comments')
+  const ss = document.querySelector('#share-section')
   const details = document.querySelector("article > details");
   const tocc = document.querySelector("details > summary");
   const toch = document.querySelector("#table-of-contents");
@@ -220,7 +230,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
     toch.style.display = "none";
   }
 
-  if (comment !== null) {
+  if (ss !== null) {
     function callback(entries, observer) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -231,7 +241,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
       })
     }
     let observer = new IntersectionObserver(callback);
-    observer.observe(comment)
+    observer.observe(ss)
   }
 </script>
 <style>

@@ -1,0 +1,85 @@
+---
+import { SITE_TITLE } from "../consts";
+import BaseHead from "../components/BaseHead.astro";
+import DownloadResume from '../components/DownloadResume.astro';
+import PageLayout from "./PageLayout.astro";
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    pdfLink?: string;
+    description: string;
+  }
+};
+
+const { title, pdfLink, description } = Astro.props.frontmatter;
+
+const initials = title
+  .split(' ')
+  .map((word) => word[0].toUpperCase())
+  .slice(0, 2);
+---
+
+
+
+<PageLayout>
+  <BaseHead
+    title={`Resume | ${SITE_TITLE}`}
+    description={description}
+  />
+  <Fragment slot="main">
+    <section class="mt-14 lg:mb-20 mb-16">
+      <div class="flex items-center justify-between mb-4">
+        <div
+          class="rounded-sm bg-[#339AF0] px-4 py-1 flex w-fit h-fit select-none flex-col items-center text-sm font-bold"
+        >
+          <span>{initials[0]}</span>
+          <span>{initials[1]}</span>
+        </div>
+        {
+          pdfLink && (
+            <div class="not-prose">
+              <DownloadResume href={pdfLink} />
+            </div>
+          )
+        }
+      </div>
+      <div class="container mx-auto flex justify-center">
+        <article class="relative">
+          <slot />
+        </article>
+      </div>
+    </section>
+  </Fragment>
+</PageLayout>
+
+<script is:inline>
+  const ps = document.querySelectorAll("p");
+  const h1s = document.querySelectorAll("h1");
+  const h2s = document.querySelectorAll("h2");
+  const h3s = document.querySelectorAll("h3");
+  const h4s = document.querySelectorAll("h4");
+
+  ps.forEach((p) => {
+    p.style.marginBottom = "16px";
+  });
+  h1s.forEach((h1) => {
+    h1.style.fontSize = "28px";
+    h1.style.fontWeight = "500";
+  });
+  h2s.forEach((h2) => {
+    h2.style.marginBottom = "6px";
+    h2.style.fontSize = "24px";
+    h2.style.fontWeight = "500";
+  });
+  h3s.forEach((h3) => {
+    h3.style.marginBottom = "4px";
+    h3.style.fontSize = "20px";
+  });
+  h4s.forEach((h4) => {
+    h4.style.marginBottom = "6px";
+    h4.style.fontSize = "18px";
+  });
+</script>
+
+

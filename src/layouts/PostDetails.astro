@@ -129,7 +129,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
           <Content />
         </article>
 
-        <div>
+        <div class="mt-5">
           <p>Tags: </p>
           <ul class="tags-container unset">
             {tags.map((tag) => <Tag name={tag} />)}
@@ -259,7 +259,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
     @apply mb-6 text-4xl font-semibold;
   }
   .tags-container {
-    @apply my-8;
+    @apply my-4;
   }
   img {
     @apply mb-5 rounded-lg;

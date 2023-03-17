@@ -173,12 +173,7 @@
     ::selection {
         background: theme('colors.bg.selection');
         color: theme('colors.text.selection');
-    }
-
-    .no-select::selection {
-        background-color: initial;
-    }
-        
+    } 
 
     .animated-link {
         position: relative;

@@ -174,7 +174,6 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
     cb.style.fontSize = "16px";
     cb.style.position = "relative";
     cb.style.top = "-16px";
-    cb.classList.add('no-select');
   });
 
   copybtns.forEach((copybtn) => {
@@ -186,15 +185,15 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
         range.selectNode(div);
         window.getSelection().addRange(range);
 
-        if (!navigator.clipboard) {
-          document.execCommand("copy");
-        } else {
+        if (navigator.clipboard) {
           try {
             await navigator.clipboard.writeText(range.toString());
             copybtn.innerHTML = checkIcon;
           } catch (e) {
             console.error(e);
           }
+        } else {
+          document.execCommand("copy");
         }
         window.getSelection().removeAllRanges();
 
@@ -208,7 +207,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
 
   code_containers.forEach((cc) => {
     cc.style.borderRadius = "12px";
-    cc.classList.add('no-select');
+    cc.classList.add('select-none')
   });
 
   ps.forEach((p) => {

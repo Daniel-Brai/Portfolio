@@ -14,4 +14,23 @@ export type SocialMedia =
   | "LinkedIn"
   | "Email"
   | "RSS"
+
+export type EmojiIcons = 
+  | "👨‍💻"
+  | "😴"
+  | "😁"
+  | "🙇‍♂️"
+  | "🎒"
+  | "🙂"
   
+export type StatusObjects = {
+  emoji: EmojiIcons;
+  description: string;
+  start_time: number;
+  end_time: number;
+}[]
+
+export type StatusObject = {
+  emoji: EmojiIcons;
+  description: string;
+};

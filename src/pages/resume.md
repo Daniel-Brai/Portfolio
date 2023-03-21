@@ -7,7 +7,7 @@ pdfLink: resume.pdf
 
 # Daniel Brai
 
-**Software Developer**
+**Software Engineer**
 
 Lagos, Nigeria | danielbrai.dev@gmail.com | <https://danielbrai.ninja>
 

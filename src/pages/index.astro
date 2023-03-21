@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_STATUS_API_URL } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import BaseHead from "../components/BaseHead.astro";
 import LinkButton from "../components/LinkButton.astro";
 import PostCard from "../components/PostCard.astro";
@@ -8,14 +8,14 @@ import PageLayout from "../layouts/PageLayout.astro";
 import getSortedPosts from "../utils/getSortedPosts";
 import { slugifyPost } from "../utils/slugify";
 import $getReadingTime from "../utils/getReadingTime";
+import $getCurrentStatus from "../utils/getCurrentStatus";
+import { Statuses } from '../assets/status'
 
 const posts = await getCollection("blog");
 
 const sortedPosts = getSortedPosts(posts);
 
-const status_api = await fetch(SITE_STATUS_API_URL)
-  .then((r) => r.json())
-  .catch((e) => console.log(e.msg));
+const current_status = $getCurrentStatus(Statuses)
 ---
 
 <PageLayout>
@@ -27,10 +27,10 @@ const status_api = await fetch(SITE_STATUS_API_URL)
           class="mx-auto mb-6 flex w-fit items-center rounded-full bg-gray-50 px-1 py-[3px] text-[12.5px] dark:bg-neutral-700 sm:text-sm"
         >
           <span class="rounded-full bg-[rgb(51,154,240)] px-1.5 py-0.5">
-            {status_api ? status_api.emoji : "👨‍💻"}
+            {current_status ? current_status[0].emoji : "👨‍💻"}
           </span>
           <span class="ml-1.5 mr-0.5">
-            {status_api ? status_api.message : "I'm currently coding"}
+            {current_status ? current_status[0].description : "I'm currently coding"}
           </span>
         </div>
         <h1 class="text-[26px] font-semibold sm:text-3xl">

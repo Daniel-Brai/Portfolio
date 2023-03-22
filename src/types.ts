@@ -26,8 +26,8 @@ export type EmojiIcons =
 export type StatusObjects = {
   emoji: EmojiIcons;
   description: string;
-  start_time: number;
-  end_time: number;
+  start_time: string;
+  end_time: string;
 }[]
 
 export type StatusObject = {

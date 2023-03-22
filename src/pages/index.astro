@@ -15,7 +15,11 @@ const posts = await getCollection("blog");
 
 const sortedPosts = getSortedPosts(posts);
 
-const current_status = $getCurrentStatus(Statuses);
+let current_status = $getCurrentStatus(Statuses);
+
+setInterval(() => {
+  current_status = $getCurrentStatus(Statuses);
+}, 3600000)
 ---
 
 <PageLayout>
@@ -27,12 +31,12 @@ const current_status = $getCurrentStatus(Statuses);
           class="mx-auto mb-6 flex w-fit items-center rounded-full bg-gray-50 px-1 py-[3px] text-[12.5px] dark:bg-neutral-700 sm:text-sm"
         >
           <span class="rounded-full bg-[rgb(51,154,240)] px-1.5 py-0.5">
-            {current_status ? current_status[0].emoji : "👨‍💻"}
+            {current_status ? current_status.emoji : "👨‍💻"}
           </span>
           <span class="ml-1.5 mr-0.5">
             {
               current_status
-                ? current_status[0].description
+                ? current_status.description
                 : "I'm currently coding"
             }
           </span>

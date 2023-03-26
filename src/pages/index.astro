@@ -8,18 +8,11 @@ import PageLayout from "../layouts/PageLayout.astro";
 import getSortedPosts from "../utils/getSortedPosts";
 import { slugifyPost } from "../utils/slugify";
 import $getReadingTime from "../utils/getReadingTime";
-import $getCurrentStatus from "../utils/getCurrentStatus";
-import { Statuses } from "../assets/status";
 
 const posts = await getCollection("blog");
 
 const sortedPosts = getSortedPosts(posts);
 
-let current_status = $getCurrentStatus(Statuses);
-
-setInterval(() => {
-  current_status = $getCurrentStatus(Statuses);
-}, 300000)
 ---
 
 <PageLayout>
@@ -30,16 +23,8 @@ setInterval(() => {
         <div
           class="mx-auto mb-6 flex w-fit items-center rounded-full bg-gray-50 px-1 py-[3px] text-[12.5px] dark:bg-neutral-700 sm:text-sm"
         >
-          <span class="rounded-full bg-[rgb(51,154,240)] px-1.5 py-0.5">
-            {current_status ? current_status.emoji : "👨‍💻"}
-          </span>
-          <span class="ml-1.5 mr-0.5">
-            {
-              current_status
-                ? current_status.description
-                : "I'm currently coding"
-            }
-          </span>
+          <span id="status-emoji" class="rounded-full bg-[rgb(51,154,240)] px-1.5 py-0.5"></span>
+          <span id="status-desc" class="ml-1.5 mr-0.5"></span>
         </div>
         <h1 class="text-[26px] font-semibold sm:text-3xl">
           Hello, I am Daniel Brai
@@ -121,13 +106,16 @@ setInterval(() => {
         <div class="mt-4">
           <ul>
             <li>
-              <span class="text-base font-medium">Node JS</span>
+              <span class="text-base font-medium">JS Frameworks (Node JS, Nest JS, Svelte, Astro)</span>
             </li>
             <li>
               <span class="text-base font-medium">Django</span>
             </li>
             <li>
-              <span class="text-base font-medium">Ruby on rails</span>
+              <span class="text-base font-medium">Ruby on Rails</span>
+            </li>
+            <li>
+              <span class="text-base font-medium">Rust</span>
             </li>
           </ul>
         </div>
@@ -135,6 +123,8 @@ setInterval(() => {
     </div>
   </Fragment>
 </PageLayout>
+
+<script src="../utils/generateStatus.ts"></script>
 
 <style>
   #recent-posts {

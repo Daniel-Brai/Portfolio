@@ -20,7 +20,6 @@ const $getCurrentStatus = (statuses: StatusObjects) => {
         ) {
             return status
         }
-        return null
     }
 };
 

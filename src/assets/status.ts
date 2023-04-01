@@ -9,7 +9,7 @@ export const Statuses: StatusObjects = [
     },
     {
         "emoji": "😁",
-        "description": "I might be in a class",
+        "description": "I'm currently unavailable",
         "start_time": "07:31",
         "end_time": "14:00"
     },

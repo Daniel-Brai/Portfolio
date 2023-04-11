@@ -1,14 +1,17 @@
 ---
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE, SITE_CDN } from "../consts";
 import PageLayout from "../layouts/PageLayout.astro";
 import BaseHead from "../components/BaseHead.astro";
 import LinkButton from "../components/LinkButton.astro";
+
+const ogImage = SITE_CDN + 'social-share.png';
 ---
 
 <PageLayout>
   <BaseHead
     title={`404 Not Found | ${SITE_TITLE}`}
     description={"Not Found Page for Daniel Brai's Portfolio"}
+    image={ogImage}
   />
   <Fragment slot="main">
     <section class="mt-16 flex items-center justify-center">

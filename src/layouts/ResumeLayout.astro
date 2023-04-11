@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE, SITE_CDN } from "../consts";
 import BaseHead from "../components/BaseHead.astro";
 import DownloadResume from '../components/DownloadResume.astro';
 import PageLayout from "./PageLayout.astro";
@@ -18,6 +18,8 @@ const initials = title
   .split(' ')
   .map((word) => word[0].toUpperCase())
   .slice(0, 2);
+
+const ogImage = SITE_CDN + 'social-share.png';
 ---
 
 
@@ -26,6 +28,7 @@ const initials = title
   <BaseHead
     title={`Resume | ${SITE_TITLE}`}
     description={description}
+    image={ogImage}
   />
   <Fragment slot="main">
     <section class="mt-14 lg:mb-20 mb-16">

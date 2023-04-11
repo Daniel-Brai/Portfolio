@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, POSTS_PER_PAGE } from "../../consts";
+import { SITE_TITLE, SITE_CDN, POSTS_PER_PAGE } from "../../consts";
 import BaseHead from "../../components/BaseHead.astro";
 import Search from "../../components/Search";
 import Posts from "../../components/Posts.astro";
@@ -14,6 +14,8 @@ const sortedPosts = getSortedPosts(posts);
 const totalPages = getPageNumbers(sortedPosts.length);
 const paginatedPosts = sortedPosts.slice(0, POSTS_PER_PAGE);
 
+const ogImage = SITE_CDN + 'social-share.png';
+
 const searchList = sortedPosts.map(({ data }) => ({
   title: data.title,
   description: data.description,
@@ -25,6 +27,7 @@ const searchList = sortedPosts.map(({ data }) => ({
   <BaseHead
     title={`Blog | ${SITE_TITLE}`}
     description={"A repository of all the things I love as an aspiring Software Engineer"}
+    image={ogImage}
   />
   <Fragment slot="main">
     <section>

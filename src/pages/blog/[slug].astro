@@ -7,7 +7,7 @@ import PostDetails from "../../layouts/PostDetails.astro";
 import getSortedPosts from "../../utils/getSortedPosts";
 import getPageNumbers from "../../utils/getPageNumber";
 import { slugifyPost } from "../../utils/slugify";
-import { SITE_TITLE, POSTS_PER_PAGE } from "../../consts";
+import { SITE_TITLE, SITE_CDN, POSTS_PER_PAGE } from "../../consts";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -45,6 +45,8 @@ const lastPost = currentPage * POSTS_PER_PAGE;
 const startPost = lastPost - POSTS_PER_PAGE;
 
 const paginatedPosts = sortedPosts.slice(startPost, lastPost);
+
+const ogImage = SITE_CDN + 'social-share.png';
 ---
 
 {
@@ -57,6 +59,7 @@ const paginatedPosts = sortedPosts.slice(startPost, lastPost);
         description={
           "A repository of all the things I love as an aspiring Software Engineer"
         }
+        image={ogImage}
       />
       <Fragment slot="main">
         <Posts

@@ -3,7 +3,6 @@ import BaseHead from "../components/BaseHead.astro";
 import Comments from "../components/Comments.astro";
 import DateTime from "../components/DateTime.astro";
 import PageLayout from "./PageLayout.astro";
-
 import type { CollectionEntry } from "astro:content";
 
 export interface Props {
@@ -25,6 +24,7 @@ const ogUrl = new URL(`/projects/${slug}`, Astro.url.origin).href;
   <BaseHead
     title={`${title} | Projects - Daniel Brai`}
     description={description}
+    image={ogImage}
   />
   <Fragment slot="main">
     <section class="relative">

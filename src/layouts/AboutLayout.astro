@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE, SITE_CDN } from "../consts";
 import BaseHead from "../components/BaseHead.astro";
 import PageLayout from "./PageLayout.astro";
 
@@ -12,12 +12,15 @@ export interface Props {
 }
 
 const { frontmatter } = Astro.props;
+
+const ogImage = SITE_CDN + 'social-share.png';
 ---
 
 <PageLayout>
   <BaseHead
     title={`About | ${SITE_TITLE}`}
     description={frontmatter.description}
+    image={ogImage}
   />
   <Fragment slot="main">
     <div class="mt-10 lg:mt-20">

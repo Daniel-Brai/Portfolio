@@ -41,7 +41,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
 ---
 
 <PageLayout>
-  <BaseHead title={`${title} | Blog - Daniel Brai`} description={description} />
+  <BaseHead title={`${title} | Blog - Daniel Brai`} description={description} image={ogImage} />
   <Fragment slot="main">
     <div class="relative">
       <button 

@@ -24,7 +24,7 @@ const { frontmatter } = Astro.props;
       <section id="about" class="mb-28 max-w-3xl prose-img:border-0">
         <button
           class="focus-outline mb-3 flex items-center hover:opacity-75"
-          onclick="history.back()"
+          onclick="window.history.go(-1)"
         >
           <svg
             class="dark:fill-white"
@@ -41,7 +41,7 @@ const { frontmatter } = Astro.props;
         <img
           class="my-6 rounded-lg"
           src={frontmatter.heroImage}
-          alt="Hero Image for About me page"
+          alt="Daniel Brai's Picture"
         />
         <slot />
       </section>

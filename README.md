@@ -1,5 +1,5 @@
 # Daniel_Brai
-My portfolio website consisting of a blog, projects and general overview section of myself (to be filled with actual data on or before April)
+My portfolio website consisting of a blog, projects and general overview section of myself (to be filled with actual data on or before the ending of May)
 
 # How to use
 - Live deployment: https://danielbrai.ninja

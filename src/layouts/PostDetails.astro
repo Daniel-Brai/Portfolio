@@ -6,6 +6,7 @@ import LinkButton from "../components/LinkButton.astro";
 import ShareArticleButton from "../components/ShareArticleButton.astro";
 import PageLayout from "./PageLayout.astro";
 import Tag from "../components/Tag.astro";
+import { SITE_CDN } from "../consts";
 
 import type { CollectionEntry } from "astro:content";
 import $getReadingTime from "../utils/getReadingTime";
@@ -33,6 +34,8 @@ const {
 const slug = postSlug || post.slug;
 
 const { Content } = await post.render();
+
+const ogImage = SITE_CDN + heroImage;
 
 const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
 ---
@@ -122,7 +125,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
           </div>
         </div>
         <div class="mt-5">
-          <img src={heroImage} alt="Article's Hero Image" loading="eager" />
+          <img src={ogImage} alt="Article's Hero Image" loading="eager" />
           <div class="mt-4 flex flex-col justify-center space-y-2"></div>
         </div>
         <article id="article" role="article" class="mt-8">

@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
-import remarkMermaid from 'astro-diagram/remark-mermaid';
+// import remarkMermaid from 'astro-diagram/remark-mermaid';
 import react from "@astrojs/react";
 import { SITE_LINK } from './src/consts';
 
@@ -13,7 +13,7 @@ import { SITE_LINK } from './src/consts';
 export default defineConfig({
   site: SITE_LINK,
   markdown: {
-    remarkPlugins: [remarkToc, remarkMermaid, [remarkCollapse, {
+    remarkPlugins: [remarkToc, [remarkCollapse, {
       test: "Table of contents"
     }]],
     extendDefaultPlugins: true,

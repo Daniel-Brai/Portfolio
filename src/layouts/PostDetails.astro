@@ -149,7 +149,9 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
         </div>
       </section>
       <section class="my-8" id="comments">
-        <Comments />
+        <div class="mt-6">
+          <Comments />
+        </div>
       </section>
     </div>
   </Fragment>

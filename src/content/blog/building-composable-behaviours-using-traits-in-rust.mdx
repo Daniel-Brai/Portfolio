@@ -19,7 +19,8 @@ Rust is a modern programming language that offers features such as memory safety
 
 A trait defines functionality a particular type has and can share with other types. We can use traits to define shared behavior in an abstract way. We can use trait bounds to specify that a generic type can be any type that has certain behavior. Traits are similar to interfaces in other programming languages, but they offer a more flexible and powerful mechanism for defining behavior. A Trait defines a set of methods that can be implemented by any type, and it can be used as a type itself. This allows for code reuse and abstraction, and it is a key feature of Rust's design. To define a trait, we use the `trait` keyword, the trait’s name and a list of method signatures..
 
-Let's declare with trait with the name `Greeting` with the method signatures that describe the behaviors of the types that implement this trait, which in this case is `fn introduce(&self) -> String`.  Also, we’ve also declared the trait as pub so that crates depending on this crate can make use of this trait too.
+First, we create a new library crate with the command `cargo new --lib greeting`.
+Then, let's declare with a public trait with the name `Greeting` with the method signatures that describe the behaviors of the types that implement this trait, which in this case is `fn introduce(&self) -> String` in `src/lib.rs` file.  Also, we’ve also declared the trait as pub so that crates depending on this crate can make use of this trait too.
 
 import CodeBlock from '../../components/CodeBlock.astro';
 
@@ -35,7 +36,7 @@ export const GreetingTrait = `
 
 ## Implementing a trait on a Type
 
-Now that we’ve defined the desired signatures of the Greeting trait’s methods, we can implement it on the types on our Person struct. Below we have an implementation of the Greeting trait on the Person struct that uses the name, age, and occupation to create the return value of introduce.
+Now in the `src/lib.rs` file, we define the desired signatures of the Greeting trait’s methods that we want to implement on the types such as our Person struct. Below we have an implementation of the Greeting trait on the Person struct that uses the name, age, and occupation to create the return value of introduce.
 
 export const Lib = `
   pub struct Person {
@@ -46,20 +47,36 @@ export const Lib = `
 
   impl Greeting for Person {
     fn introduce(&self) -> String {
-        format!("Hi, my name is {}. I am {} years old and a {}.", self.name, self.age, self.occupation)
+        println!("Hi, my name is {}. I am {} years old and a {}.", self.name, self.age, self.occupation)
     }
   }
 `
 
 <CodeBlock id={"code-block-2"} code={Lib} lang={rust} />
 
-Implementing a trait on a type is similar to implementing regular methods. The difference is that after impl, we put the trait name we want to implement, then use the for keyword, and then specify the name of the type we want to implement the trait for. Within the impl block, we put the method signatures that the trait definition has defined. Instead of adding a semicolon after each signature, we use curly brackets and fill in the method body with the specific behavior that we want the methods of the trait to have for the particular type.
 The above implementation defines a method called "introduce" for the Person struct that prints an introduction with the person's name, age and occupation.
+Now that the library has implemented the Greeting trait on Person, users of the crate can call the trait methods on instances of Person in the same way we call regular methods. The only difference is that the user must bring the trait into scope as well as the types. Here’s an example of how a binary crate could use our greeting library crate:
+
+
+export const main = `
+  use greeting::{Greeting, Person};
+
+  fn main() {
+      let p = Person {
+          username: String::from("Daniel Brai"),
+          age: 21
+          occupation: String::from("Software Engineer"),
+      };
+
+      println!("Introduction: {}", p.introduce());
+  }
+`
+
+<CodeBlock id={"code-block-3"} code={main} lang={rust} />
+
+This code prints Introduction: Hi, my name is Daniel Brai. I am 21 years old and a Software Engineer.
 
 ## More examples
-
-**Note**: In this example, we implement struct called `Connection and `Row` which are used in the return type of our method signatures. Without getting into too much detail. Here, we can think of the Connection struct as having an associated function that opens a TCP connection to the database when a url path to the database is passed to it. Also, the Row struct represent a row of the database. 
-
 
 Now let's consider a more practical example of using Traits for building composable behavior. Suppose we want to write a program that interacts with a database. We could define a Trait called `DatabaseConnection` that defines a set of methods for connecting to and querying a database:
 
@@ -70,9 +87,11 @@ export const DatabaseConnectionTrait = `
   }
 `
 
-<CodeBlock id={"code-block-3"} code={DatabaseConnectionTrait} lang={rust} />
+<CodeBlock id={"code-block-4"} code={DatabaseConnectionTrait} lang={rust} />
 
-This trait defines two methods: "connect" and "execute". The "connect" method returns a Result that contains a Connection object if the connection was successful, and an error message if it failed. The "execute" method takes a SQL query as a string and returns a Result that contains a vector of Row objects if the query was successful, and an error message if it failed. To use this Trait, we can implement it for different types of databases, such as MySQL or SQLite. Here is an example implementation for SQLite:
+**Note**: In this example, we implement struct called `Connection` and `Row` which are used in the return type of our method signatures. Without getting into too much detail. Here, we can think of the Connection struct as having an associated function that opens a TCP connection to the database when a url path to the database is passed to it. Also, the Row struct represent a row of the database. 
+
+The DatabaseConnection trait defines two methods: "connect" and "execute". The "connect" method returns a Result that contains a Connection object if the connection was successful, and an error message if it failed. The "execute" method takes a SQL query as a string and returns a Result that contains a vector of Row objects if the query was successful, and an error message if it failed. To use this Trait, we can implement it for different types of databases, such as MySQL or SQLite. Here is an example implementation for SQLite:
 
 export const SQLStructImpl = `
   struct SqliteConnection {
@@ -94,7 +113,7 @@ export const SQLStructImpl = `
   }
 `
 
-<CodeBlock id={"code-block-3"} code={SQLStructImpl} lang={rust} />
+<CodeBlock id={"code-block-5"} code={SQLStructImpl} lang={rust} />
 
 This implementation defines a Struct called "SqliteConnection" that contains the path to the SQLite database file. It then implements the DatabaseConnection Trait for this Struct by defining the "connect" and "execute" methods. The "connect" method opens a connection to the SQLite database using the "rusqlite" crate and returns a Connection object if successful. The "execute" method prepares and executes a SQL.
 

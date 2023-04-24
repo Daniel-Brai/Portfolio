@@ -28,7 +28,7 @@ const heroImage = SITE_CDN + frontmatter.heroImage
       <section id="about" class="mb-28 max-w-3xl prose-img:border-0">
         <button
           class="focus-outline mb-3 flex items-center hover:opacity-75"
-          onclick="goback()"
+          onclick="window.location.href = '/'"
         >
           <svg
             class="dark:fill-white"
@@ -39,7 +39,7 @@ const heroImage = SITE_CDN + frontmatter.heroImage
               d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
             ></path>
           </svg>
-          <span>Go back</span>
+          <span>Go to Home</span>
         </button>
         <h1 class="text-2xl tracking-wider sm:text-3xl font-semibold">{frontmatter.title}</h1>
         <img

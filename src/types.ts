@@ -34,3 +34,8 @@ export type StatusObject = {
   emoji: EmojiIcons;
   description: string;
 };
+
+export type AllowedFileTypes = 
+  | "gif"
+  | "mp3"
+  | "mp4"

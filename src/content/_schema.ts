@@ -22,7 +22,7 @@ export const blogSchema = z
 		tags: z.array(z.string()).optional().default(["learning-in-public", "web-development"]),
     });
 
-export const ProjectTypeEnumValues = z.enum(["Web", "CLI", "XR", "Others"])
+export const ProjectTypeEnumValues = z.enum(["Web", "Terminal", "XR", "Systems"])
 export type ProjectTypeEnum = z.infer<typeof ProjectTypeEnumValues>
 export const projectSchema = z
     .object({

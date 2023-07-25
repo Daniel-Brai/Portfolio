@@ -6,7 +6,7 @@ heroImage: "projects/repotran.png"
 tags:
   - "#Nest JS"
   - "#PostgreSQL"
-  - "#TailwindCSS"
+  - "#Tailwind"
 github_link: "https://github.com/Daniel-Brai/Repotran"
 live_link: "https://github.com/Daniel-Brai/Repotran"
 ---

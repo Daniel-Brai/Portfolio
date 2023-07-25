@@ -6,7 +6,7 @@ heroImage: "projects/atomic.png"
 tags:
   - "#Nest JS"
   - "#SQLite"
-  - "#TailwindCSS"
+  - "#Tailwind"
 github_link: "https://github.com/Daniel-Brai/Atomic"
 live_link: "https://github.com/Daniel-Brai/Atomic"
 ---

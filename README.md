@@ -1,10 +1,10 @@
 # Daniel_Brai
-My portfolio website consisting of a blog, projects and general overview section of myself (to be filled with actual data on or before the ending of May)
+My portfolio website consists of a blog, projects, and a general overview section of myself 
 
 # How to use
-- Live deployment: https://danielbrai.ninja
+- Live deployment: https://danielbrai.me
 - Local deployment:
 1. Download or clone this repository on your computer.
 2. Run the command: `npm i` to install dependencies.
-3. Note the comments sections for blog posts won't work, you have to install the giscus app on github repository where the clone app is pushed. Check out giscus.app for more info.
+3. Note that the comment sections for blog posts won't work if you are not online and the project details views need to be updated
 4. Run the command `npm run start:dev` to view the app in `localhost:3000` on the browser.

@@ -6,7 +6,7 @@
 
 <script is:inline>
   // figure out user's preferred theme and set it as html class for tailwind before paint
-  (function () {
+  function setUserTheme () {
     if (typeof window !== "undefined") {
       const isSystemColorSchemeDark = window.matchMedia(
         "(prefers-color-scheme: dark)"
@@ -16,6 +16,15 @@
         document.documentElement.classList.add("dark");
         document.head.children.namedItem("theme-color").content = "#262626";
       } else if (storageTheme === "dark") {
+        const toggle = document.querySelector("button");
+        const iconElem = toggle?.querySelector("#mode-circle");
+
+        if (iconElem) {
+          iconElem.classList.remove("light");
+          iconElem.classList.add("dark");
+        }  
+        // we load the toggle invisible to prevent flash
+        // remove visibility class after setting initial dark/light class
         document.documentElement.classList.add("dark");
         document.head.children.namedItem("theme-color").content = "#262626";
       } else {
@@ -23,5 +32,7 @@
         document.head.children.namedItem("theme-color").content = "#ffffff";
       }
     }
-  })();
+  };
+  setUserTheme();
+  document.addEventListener('astro:after-swap', setUserTheme);
 </script>

@@ -3,6 +3,8 @@
 // all pages through the use of the <BaseHead /> component.
 import "../styles/global.css";
 
+import { ViewTransitions } from 'astro:transitions';
+
 export interface Props {
   title: string;
   description: string;
@@ -32,6 +34,8 @@ const { title, description, image } = Astro.props;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+
+<ViewTransitions fallback="animate">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />

@@ -1,0 +1,133 @@
+---
+title: "Accelerating the web with HTTP2"
+description: "Explore the HTTP2 protocol with Node.js"
+pubDate: "Sept 30 2023"
+tags: 
+  - "HTTP2"
+  - "web-development"
+  - "node-js"
+heroImage: "blog/fifth-post/main.png"
+---
+
+## Table of contents
+
+## Introduction
+
+In the ever-expanding landscape of the internet, where speed and efficiency are paramount, the evolution of web protocols plays a crucial role. One such significant leap forward is HTTP/2, a protocol designed to enhance the performance of websites and applications. In this article, we will explore the fundamental concepts of HTTP/2, delve into the implementation of an HTTP/2 server using Node.js, and understand why HTTP/2 is indispensable for the modern web.
+
+## Understanding HTTP/2
+
+HTTP/2, the second major version of the HTTP network protocol, was standardized by the Internet Engineering Task Force (IETF) in 2015. Unlike its predecessor, HTTP/1.1, which used a text-based format, HTTP/2 employs binary framing for improved efficiency. The protocol is built on the foundation of Google's SPDY protocol and brings several essential features to the table
+
+- Multiplexing: HTTP/2 enables multiple requests and responses to be multiplexed over a single TCP connection. This means that multiple files can be sent or received simultaneously, eliminating the need for multiple connections.
+
+- Header Compression: HTTP/2 uses header compression techniques to significantly reduce overhead. Headers are encoded using a more efficient algorithm, reducing the amount of data that needs to be transmitted.
+
+- Server Push: Servers can proactively send resources to the client's cache before they are requested, enhancing page load times. This feature is especially useful for loading related assets without waiting for additional requests from the client.
+
+- Stream Prioritization: HTTP/2 allows the prioritization of streams, ensuring that more critical resources are fetched and displayed first, enhancing the user experience.
+
+
+## Implementing an HTTP/2 Server in Node.js
+
+In Node.js is straightforward, thanks to the 'http2' module that comes with recent versions of Node.js but first we have to generate SSL/TLS key and certificate files for our HTTP/2 server. We are going to be using <a href="https://www.openssl.org">OpenSSL</a> to generate the key and certificate. Check whether you have openssl installed on your system through the command: `openssl version`. If OpenSSL is not installed, you can install its
+
+import CodeBlock from '../../components/CodeBlock.astro';
+
+For Debian-based Linux system:
+
+export const sh = "bash";
+
+export const OP1 = `
+  sudo apt-get update
+  sudo apt-get install openssl
+` 
+
+<CodeBlock id={"code-block-1"} code={OP1} lang={sh} />
+
+Now, Here's how you can generate a self-signed SSL certificate and private key using OpenSSL. 
+
+- Step 1: Generate Private Key (server-key.pem)
+
+Run the following command below to generate a private key file. You'll be prompted to set a password for the private key (you can skip this step if you want to create a key without a password).
+
+export const OP2 = `
+  openssl genpkey -algorithm RSA -out server-key.pem
+` 
+
+<CodeBlock id={"code-block-2"} code={OP2} lang={sh} />
+
+
+- Step 2: Generate Certificate Signing Request (CSR) and Certificate (server-cert.pem)
+
+Run the following command to generate a CSR and a self-signed certificate
+
+
+export const OP3 = `
+  openssl req -new -key server-key.pem -out server-csr.pem
+` 
+
+<CodeBlock id={"code-block-3"} code={OP3} lang={sh} />
+
+You will be prompted to enter various pieces of information, such as your country, state, organization, and common name (usually your domain name which is localhost). Once you've provided the necessary information, OpenSSL will generate a CSR file.
+
+To create a self-signed certificate from the CSR, run:
+
+
+export const OP4 = `
+  openssl x509 -req -days 365 -in server-csr.pem -signkey server-key.pem -out server-cert.pem
+` 
+
+<CodeBlock id={"code-block-4"} code={OP4} lang={sh} />
+
+This command will generate a self-signed certificate (server-cert.pem) that is valid for 365 days.
+
+Now, you have two files: server-key.pem (the private key) and server-cert.pem (the self-signed certificate). These files can be used in your Node.js HTTP/2 server for secure communication. Remember that self-signed certificates are suitable for development and testing purposes but not for production use, as they don't provide the same level of trust and security as certificates signed by Certificate Authorities (CAs). For production, you should obtain a certificate from a trusted CA.
+
+
+Now that we have our certfificate, we should be capable of creating an HTTP/2 server
+
+export const javascript = 'js';
+
+export const Http2Server = `
+  const http2 = require('http2');
+  const fs = require('fs');
+
+  const server = http2.createSecureServer({
+    key: fs.readFileSync('server-key.pem'),
+    cert: fs.readFileSync('server-cert.pem')
+  });
+
+  server.on('error', (err) => console.error(err));
+
+  server.on('stream', (stream, headers) => {
+    // Handle incoming streams (requests)
+    stream.respond({
+      'content-type': 'text/html',
+      ':status': 200
+    });
+    stream.end('<h1>Hi, Daniel from HTTP2!</h1>');
+  });
+
+  server.listen(8443, () => {
+    console.log('HTTP/2 server is running on port 8443');
+  });
+`
+
+<CodeBlock id={"code-block-5"} code={Http2Server} lang={javascript} />
+
+In the above example, we create a secure HTTP/2 server using a self-signed SSL certificate. The server responds with an HTML message for any incoming requests.
+
+## Why HTTP/2 is Important
+
+- Improved Performance: By allowing multiplexing, header compression, and prioritization, HTTP/2 significantly reduces latency and speeds up the loading of web pages and applications. Users experience faster, more responsive websites.
+
+- Bandwidth Efficiency: HTTP/2 optimizes bandwidth usage, enabling websites to load with fewer data transfers. This efficiency is particularly crucial for users on slow or limited internet connections and helps conserve resources for both clients and servers.
+
+- Better User Experience: Faster websites lead to improved user satisfaction and engagement. Reduced load times enhance user interaction, decrease bounce rates, and positively impact conversion rates for e-commerce sites.
+
+- SEO Benefits: Search engines like Google consider website speed as a ranking factor. Websites optimized for HTTP/2 tend to rank higher in search results, making it essential for SEO strategies.
+
+## Conclusion
+
+HTTP/2 represents a significant leap in the evolution of web protocols, focusing on speed, efficiency, and a seamless user experience. By understanding its core features and implementing HTTP/2 servers, developers can ensure that their web applications are at the forefront of modern technology. Embracing HTTP/2 is not just about improving speed; it's about shaping a faster, more efficient, and enjoyable online environment for users worldwide.

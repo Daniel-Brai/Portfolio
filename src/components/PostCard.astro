@@ -17,6 +17,7 @@ const { href, frontmatter, readTime, presentTags = false } = Astro.props;
     <a
       href={href}
       class="inline-block text-[17px] font-medium underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0 sm:text-lg"
+      data-astro-reload
     >
       {frontmatter.title}
     </a>
@@ -40,18 +41,6 @@ const { href, frontmatter, readTime, presentTags = false } = Astro.props;
           ""
         )
       }
-      <!-- <div class={`${presentTags == true ? "flex flex-wrap items-center space-x-2" : "hidden"}`}>
-        {
-          frontmatter.tags.map((tag) => {
-            <a 
-              class="unset"
-              href={`/tags/${tag.toLowerCase()}`}
-            >
-              {tag}
-            </a>
-          }
-        )}
-      </div> -->
     </div>
     <p class="text-[14.5px] sm:text-base">{frontmatter.description}</p>
   </li>

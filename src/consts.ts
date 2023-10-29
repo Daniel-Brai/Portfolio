@@ -2,7 +2,7 @@ import type { SocialObjects } from "./types";
 export const SITE_TITLE = 'Daniel Brai';
 export const SITE_LINK = 'https://danielbrai.me/'
 export const SITE_CDN = 'https://cdn.jsdelivr.net/gh/Daniel-Brai/CDN/portfolio/'
-export const SITE_DESCRIPTION = "Daniel Brai - An Aspiring Software Engineer and third year Computer Science Undergraduate";
+export const SITE_DESCRIPTION = "Daniel Brai - A Passionate Software Engineer and fourth year Computer Science Undergraduate";
 export const POSTS_PER_PAGE: number = 4;
 
 export const SOCIALS: SocialObjects = [

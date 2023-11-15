@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
+import robotsTxt from "astro-robots-txt";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
 import remarkMermaid from "astro-diagram/remark-mermaid";
@@ -19,7 +20,7 @@ export default defineConfig({
     extendDefaultPlugins: true,
     syntaxHighlight: 'shiki',
     shikiConfig: {
-      theme: 'github-dark',
+      theme: 'nord',
       warp: true
     }
   },
@@ -29,5 +30,5 @@ export default defineConfig({
     config: {
       applyBaseStyles: false
     }
-  }), react()]
+  }), react(), robotsTxt()]
 });

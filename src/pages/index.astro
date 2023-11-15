@@ -1,144 +1,106 @@
 ---
 import { getCollection } from "astro:content";
-import { SITE_TITLE, SITE_CDN, SITE_DESCRIPTION } from "../consts";
-import BaseHead from "../components/BaseHead.astro";
-import LinkButton from "../components/LinkButton.astro";
-import PostCard from "../components/PostCard.astro";
-import PageLayout from "../layouts/PageLayout.astro";
-import getSortedPosts from "../utils/getSortedPosts";
-import { slugifyPost } from "../utils/slugify";
-import $getReadingTime from "../utils/getReadingTime";
+import { Image } from "astro:assets"
 
-const posts = await getCollection("blog");
+import Layout from "@/layouts/Layout.astro";
+import SocialLinks from "@/components/SocialLinks.astro";
+import PostCard from "@/components/PostCard.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import Link from "@/components/Link.astro";
+import convertAsteriskToStrongTag from "@/utils/convertAsteriskToStrongTag";
+import { slugifyStr } from '../utils/slugify';
 
-const ogImage = SITE_CDN + 'social-share.png';
+import presentation from "@/data/presentation";
+import projects from "@/data/projects";
 
-const sortedPosts = getSortedPosts(posts);
+const posts = (await getCollection("posts")).sort((first, second) => {
+  return second.data.publishedAt.getTime() - first.data.publishedAt.getTime();
+});
 ---
 
-<PageLayout>
-  <BaseHead title={`${SITE_TITLE}`} description={SITE_DESCRIPTION} image={ogImage} />
-  <Fragment slot="main">
-    <div>
-      <section class="mt-10" id="introduction">
-        <div
-          class="mx-auto mb-6 flex w-fit items-center rounded-full bg-gray-50 px-1 py-[3px] text-[12.5px] dark:bg-neutral-700 sm:text-sm"
-        >
-          <span id="status-emoji" class="rounded-full bg-[rgb(51,154,240)] px-1.5 py-0.5"></span>
-          <span id="status-desc" class="ml-1.5 mr-0.5"></span>
-        </div>
-        <h1 class="text-[26px] font-semibold sm:text-3xl">
-          Hello, I am Daniel Brai
+<Layout>
+  <main class="flex flex-col gap-20">
+    <article
+      class="flex flex-col gap-8 md:flex-row-reverse md:justify-end md:gap-12"
+    >
+      {
+        presentation.profile && (
+          <Image
+            src={presentation.profile}
+            class="w-1/4 self-center rounded-full"
+            alt="Your Profile"
+            width="200"
+            height="200"
+          />
+        )
+      }
+
+      <div class="flex flex-col gap-8">
+        <h1 class="text-3xl text-neutral-100">
+          {presentation.title}
         </h1>
-        <p class="mt-1.5">
-          I am a well-versed and passionate Software Engineer who loves to learn new
-          things and solve problems linked with business functions
-        </p>
-        <div class="mt-1.5 flex items-center space-x-6">
-          <a class="inline-block" href="/about"> About</a>
-          <a
-            title="Daniel Brai's Resume"
-            class="unset inline-block"
-            href="/resume.pdf"
-            download
-          >
-            <div class="flex">
-              <span>Resume</span>
-              <svg
-                class="rotate-45 dark:fill-white"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                ><path
-                  d="M11 8.414V18h2V8.414l4.293 4.293 1.414-1.414L12 4.586l-6.707 6.707 1.414 1.414z"
-                ></path></svg
-              >
-            </div>
-          </a>
-        </div>
-      </section>
-      <section id="recent-posts">
-        <h2>Writing</h2>
-        <p class="mt-1.5">
-          I love diving into the nitty-gritty of different technologies and seeing what makes them tick, all driven by my insatiable curiosity to learn more.
-          <br>
-          Here are some of my recent writeups. They're a mix of thoughts and experiments with various technologies, ranging from cutting-edge frameworks to classic programming languages.
-        </p>
-        <ul>
-          {
-            sortedPosts.map(
-              (post, index) =>
-                index < 3 && (
-                  <PostCard
-                    href={`/blog/${slugifyPost(post.data)}`}
-                    frontmatter={post.data}
-                    readTime={$getReadingTime(post.body)}
-                    presentTags={false}
-                  />
-                )
-            )
-          }
-        </ul>
-        <div class="all-posts-btn-wrapper">
-          <LinkButton
-            className={"flex items-center"}
-            href="/blog"
-            target={"_self"}
-          >
-            <p>All Articles</p>
-            <svg
-              class="dark:fill-white"
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              ><path
-                d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-              ></path>
-            </svg>
-          </LinkButton>
-        </div>
-      </section>
-      <section class="mt-6 mb-10" id="my-tools">
-        <h2 class="text-xl font-semibold tracking-wide sm:text-2xl">
-          My Tools
-        </h2>
-        <p class="mt-1.5">
-          Some of the major tools I love and have worked with:
-        </p>
-        <div class="mt-4">
-          <ul>
-            <li>
-              <span class="text-base font-medium">Typescript</span>
-            </li>
-            <li>
-              <span class="text-base font-medium">Ruby</span>
-            </li>
-            <li>
-              <span class="text-base font-medium">Golang</span>
-            </li>
-            <li>
-              <span class="text-base font-medium">Rust</span>
-            </li>
-            <li>
-              <span class="text-base font-medium">Zig</span>
-            </li>
-          </ul>
-        </div>
-      </section>
-    </div>
-  </Fragment>
-</PageLayout>
 
-<script src="../utils/generateStatus.ts"></script>
+        <h2
+          class="w-auto max-w-[60ch] leading-6"
+          set:html={convertAsteriskToStrongTag(presentation.description)}
+        />
 
-<style>
-  #recent-posts {
-    @apply pt-12 pb-6;
-  }
-  #recent-posts h2 {
-    @apply text-xl font-semibold tracking-wide sm:text-2xl;
-  }
-  .all-posts-btn-wrapper {
-    @apply my-4 flex justify-center text-center;
-  }
-</style>
+        <SocialLinks />
+      </div>
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header class="flex w-full flex-row justify-between gap-2">
+        <h3 class="text-lg text-neutral-100">Latest posts</h3>
+        <Link href="/posts" label="See all posts" isUnderline target="_self" />
+      </header>
+      {posts.length === 0 && <p>Soon, stay connected 👀...</p>}
+
+      <section class="flex flex-col gap-4 md:flex-row md:flex-wrap">
+        {
+          posts.length !== 0 &&
+            posts
+              .slice(0, 2)
+              .map((post) => (
+                <PostCard
+                  publishedAt={post.data.pubDate}
+                  title={post.data.title}
+                  description={post.data.description}
+                  slug={slugifyStr(post.data.title)}
+                />
+              ))
+        }
+      </section>
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header class="flex w-full flex-row justify-between gap-2">
+        <h3 class="text-lg text-neutral-100">
+          Selected projects ({projects.length})
+        </h3>
+      </header>
+      {projects.length === 0 && <p>Oops, I must work^^^^^</p>}
+
+      <section class="flex flex-col gap-4">
+        {
+          projects.length !== 0 &&
+            projects.map((project) => <ProjectCard {...project} />)
+        }
+      </section>
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header class="flex w-full flex-row justify-between gap-2">
+        <h3 class="text-lg text-neutral-100">Get in touch</h3>
+      </header>
+      <p>
+        Email me at <Link
+          href={`mailto:${presentation.mail}`}
+          label={presentation.mail}
+        /> or follow me via my social links.
+      </p>
+
+      <SocialLinks />
+    </article>
+  </main>
+</Layout>

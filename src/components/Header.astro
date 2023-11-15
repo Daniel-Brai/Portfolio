@@ -1,33 +1,36 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
-import ThemeToggle from "./ThemeToggle.astro";
+import removeTrailingSlash from "@/utils/removeTrailingSlash";
+import presentation from "@/data/presentation";
+
+const pathname = removeTrailingSlash(Astro.url.pathname);
 ---
 
-<header>
-  <a
-    class="unset absolute left-[50%] -top-[100rem] z-10 translate-x-[-50%] bg-white px-8 py-2 text-black focus:top-[initial]"
-    href="#main"
+<header class="z-40 flex w-full flex-col gap-2 md:flex-row md:justify-between">
+  <a href={`mailto:${presentation.mail}`} class="hover:text-neutral-100"
+    >{presentation.mail}</a
   >
-    Skip to content
-  </a>
-  <nav>
-    <section class="text-text-bold">
-      <ul class="unset flex gap-4 [&>li]:p-0">
-        <li><HeaderLink href="/">Home</HeaderLink></li>
-        <li><HeaderLink href="/blog">Blog</HeaderLink></li>
-        <li><HeaderLink href="/projects">Projects</HeaderLink></li>
-      </ul>
-    </section>
+
+  <nav role="navigation">
+    <ul role="list" class="flex flex-row gap-2">
+      <li>
+        <a
+          href="/"
+          class:list={{
+            ["hover:text-neutral-100"]: true,
+            ["text-neutral-100"]: pathname === "/",
+          }}>Home</a
+        >
+      </li>
+      <li>/</li>
+      <li>
+        <a
+          href="/posts"
+          class:list={{
+            ["hover:text-neutral-100"]: true,
+            ["text-neutral-100"]: pathname === "/posts",
+          }}>Posts</a
+        >
+      </li>
+    </ul>
   </nav>
-  <div class="flex content-center items-center justify-self-end text-text-bold">
-    <ThemeToggle transition:persist/>
-  </div>
 </header>
-<style>
-  header {
-    grid-area: header;
-    display: grid;
-    align-items: center;
-    grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
-  }
-</style>

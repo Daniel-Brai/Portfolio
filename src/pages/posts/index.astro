@@ -1,0 +1,45 @@
+---
+import type { HeadTags } from '@/types';
+import { SITE_TITLE, POSTS_PER_PAGE } from "@/consts";
+// import Search from "@/components/Search";
+import Posts from "@/components/Posts.astro";
+import Layout from "@/layouts/BaseLayout.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import getPageNumbers from "@/utils/getPageNumber";
+
+import { getCollection } from "astro:content";
+
+let posts = await getCollection("posts");
+const sortedPosts = getSortedPosts(posts);
+const totalPages = getPageNumbers(sortedPosts.length);
+const paginatedPosts = sortedPosts.slice(0, POSTS_PER_PAGE);
+
+const props: HeadTags = {
+  title: `Posts - ${SITE_TITLE}`,
+  description: "Mastering Software Engineering one post at a time",
+  og: {
+    title: `Posts - ${SITE_TITLE}`,
+    description: "Mastering Software Engineering one post at a time",
+    image: "/daniel-brai-posts.png",
+  },
+}
+
+const searchList = sortedPosts.map(({ data }) => ({
+  title: data.title,
+  description: data.description,
+  data: data,
+}));
+---
+
+<Layout {...props}>
+  <main>
+    <section>
+      <!-- <Search client:load searchList={searchList} /> -->
+      <Posts
+        posts={paginatedPosts}
+        pageNum={1}
+        totalPages={totalPages.length}
+      />
+    </section>
+  </main>
+</Layout>

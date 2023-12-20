@@ -1,22 +1,13 @@
 ---
-import { SITE_TITLE, SITE_CDN } from "../consts";
-import PageLayout from "../layouts/PageLayout.astro";
-import BaseHead from "../components/BaseHead.astro";
-import LinkButton from "../components/LinkButton.astro";
-
-const ogImage = SITE_CDN + 'social-share.png';
+import Layout from "@/layouts/BaseLayout.astro";
+import LinkButton from "@/components/LinkButton.astro";
 ---
 
-<PageLayout>
-  <BaseHead
-    title={`404 Not Found | ${SITE_TITLE}`}
-    description={"Not Found Page for Daniel Brai's Portfolio"}
-    image={ogImage}
-  />
-  <Fragment slot="main">
+<Layout>
+  <main>
     <section class="mt-16 flex items-center justify-center">
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-9xl font-bold" aria-label="404 Not Found">404</h1>
+        <h1 class="text-7xl font-bold" aria-label="404 Not Found">404</h1>
         <span aria-hidden="true">¯\_(ツ)_/¯</span>
         <p class="mt-4 text-2xl sm:text-3xl">Page Not Found</p>
         <LinkButton
@@ -28,5 +19,5 @@ const ogImage = SITE_CDN + 'social-share.png';
         </LinkButton>
       </div>
     </section>
-  </Fragment>
-</PageLayout>
+  </main>
+</Layout>

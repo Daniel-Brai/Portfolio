@@ -12,13 +12,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.3.3",
     "@astrojs/mdx": "^1.1.0",
     "@astrojs/react": "^3.0.2",
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.0.0",
     "@astrojs/tailwind": "^5.0.0",
-    "@fontsource/jetbrains-mono": "^5.0.17",
-    "@fontsource/open-sans": "^5.0.17",
+    "@fontsource/roboto-mono": "^5.0.16",
     "@tailwindcss/typography": "^0.5.9",
     "@types/github-slugger": "^2.0.0",
     "@types/react": "^18.0.28",
@@ -44,6 +44,6 @@
     "prettier": "^2.8.4",
     "prettier-plugin-astro": "^0.12.2",
     "prettier-plugin-tailwindcss": "^0.2.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   }
 }

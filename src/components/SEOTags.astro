@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import { SEO } from "astro-seo";
 import { SITE_LINK, SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import type { HeadTags } from "../types";
@@ -6,7 +7,7 @@ import type { HeadTags } from "../types";
 type Props = HeadTags;
 
 const { title, description, noindex, og } = Astro.props;
-
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const DEFAULT_TITLE_PAGE = SITE_TITLE;
 const DEFAULT_DESCRIPTION_PAGE = SITE_DESCRIPTION;
 const DEFAULT_URL_SITE = SITE_LINK;
@@ -14,8 +15,8 @@ const DEFAULT_URL_SITE = SITE_LINK;
 const openGraph = {
   title: title || og?.title || DEFAULT_TITLE_PAGE,
   type: og?.type || "website",
-  image: og?.image || "/opengraph-image.jpg",
-  alt: og?.alt || "astro portfolio template image",
+  image: og?.image || "/daniel-brai.png",
+  alt: og?.alt || "Daniel Brai - Software Engineer",
   url: DEFAULT_URL_SITE,
   description: og?.description || DEFAULT_DESCRIPTION_PAGE,
 };
@@ -42,11 +43,18 @@ const openGraph = {
     }}
     extend={{
       link: [
-        { rel: "icon", href: "/favicon.svg" },
+        { rel: "icon", href: "/favicon.ico" },
         { rel: "sitemap", href: "/sitemap-index.xml" },
+        { rel: "canonical", href: `${canonicalURL}` },
+        { rel: "icon", type: "image/png", sizes: "512x512", href: "/android-chrome-512x512.png" },
+        { rel: "icon", type: "image/png", sizes: "192x192", href: "/android-chrome-192x192.png" },
+        { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+        { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+        { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
       ],
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "description", content: description || DEFAULT_DESCRIPTION_PAGE },
         { name: "generator", content: Astro.generator },
         {
           name: "twitter:image",
@@ -59,4 +67,5 @@ const openGraph = {
       ],
     }}
   />
+  <ViewTransitions fallback="animate">
 </head>

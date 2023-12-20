@@ -1,13 +1,12 @@
 ---
-import Header from "../components/Header.astro";
-import BlurCircle from "../components/BlurCircle.astro";
-import theme from "../data/theme";
-import SEOTags from "../components/SEOTags.astro";
+import Header from "@/components/Header.astro";
+import BlurCircle from "@/components/BlurCircle.astro";
+import theme from "@/data/theme";
+import SEOTags from "@/components/SEOTags.astro";
 import type { HeadTags } from "../types";
 
-import "@fontsource/open-sans";
+import "@fontsource/roboto-mono";
 import "@/styles/global.css";
-import "@/styles/post.css";
 
 export type Props = HeadTags;
 
@@ -27,7 +26,7 @@ const headTags = Astro.props;
     <slot />
     <style is:global>
       html {
-        font-family: "Open Sans";
+        font-family: "Roboto Mono";
       }
     </style>
   </body>

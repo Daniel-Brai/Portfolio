@@ -1,12 +1,12 @@
 import Fuse from "fuse.js";
+import type { CollectionEntry } from "astro:content";
 import { useEffect, useState, useRef } from "react";
-import { slugifyPost } from "../utils/slugify";
-import type { BlogFrontmatter } from "../content/_schema";
+import { slugifyStr } from "../utils/slugify";
 
 export type SearchItem = {
   title: string;
   description: string;
-  data: BlogFrontmatter;
+  data: CollectionEntry<"posts">;
 };
 
 interface Props {
@@ -23,18 +23,18 @@ function SearchItemList({item, refIndex}: SearchResult) {
     <li key={`${refIndex}`}>
       <a
         className=""
-        href={`/blog/${slugifyPost(item.data)}`}
-        key={`${refIndex}-${slugifyPost(item.data)}`}
+        href={`/posts/${slugifyStr(item.data.data.title)}`}
+        key={`${refIndex}-${slugifyStr(item.data.data.title)}`}
       >
         <span
-          key={`${refIndex - 2}-${slugifyPost(item.data)}-2`}
+          key={`${refIndex - 2}-${slugifyStr(item.data.data.title)}-2`}
           className="text-sm"
         >
           {item.title}
         </span>
       </a>
       <p
-        key={`${refIndex - 3}-${slugifyPost(item.data)}-3`}
+        key={`${refIndex - 3}-${slugifyStr(item.data.data.title)}-3`}
         className="text-xs"
       >
         {item.description}
@@ -105,7 +105,7 @@ export default function SearchBar({ searchList }: Props) {
         <input
           id="default-search"
           className="block w-full rounded-lg bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-[rgba(23,23,23,0.8)] dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          placeholder="Search Articles..."
+          placeholder="Search Posts..."
           type="text"
           name="search"
           value={inputVal}

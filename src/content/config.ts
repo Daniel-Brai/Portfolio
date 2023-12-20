@@ -1,22 +1,26 @@
 import { defineCollection, z } from 'astro:content';
-import { postSchema } from './_schema';
 
-const postsCollection = defineCollection({
-  type: "content",
-  schema: z.object({
-    title: z.string(),
-    publishedAt: z.date(),
-		updatedAt: z
-			.date()
-			.optional(),
-    description: z.string(),
-    isDraft: z.boolean().default(false),
-		heroImage: z.string().optional(),
-		ogImage: z.string().optional(),
-		tags: z.array(z.string()).optional().default(["learning-in-public", "web-development"]),
-  }), 
+export const postsSchema = z.object({
+  title: z.string(),
+  author: z.string().default('Daniel Brai'),
+  publishedAt: z.date(),
+	updatedAt: z
+		.date()
+		.optional(),
+  description: z.string(),
+  isDraft: z.boolean().default(false),
+	heroImage: z.string().optional(),
+	ogImage: z.string().optional(),
+	tags: z.array(z.string()).optional().default(["learning-in-public", "web-development"]),
 });
 
+export const postsCollection = defineCollection({
+  type: "content",
+  schema: postsSchema,
+});
+
+export type PostFrontmatter = z.infer<typeof postsSchema>;
+
 export const collections = { 
-	posts: postsCollection 
+	"posts": postsCollection 
 };

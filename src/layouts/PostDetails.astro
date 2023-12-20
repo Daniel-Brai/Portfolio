@@ -1,18 +1,19 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Comments from "../components/Comments.astro";
-import DateTime from "../components/DateTime.astro";
-import LinkButton from "../components/LinkButton.astro";
-import ShareArticleButton from "../components/ShareArticleButton.astro";
-import PageLayout from "./PageLayout.astro";
-import Tag from "../components/Tag.astro";
-import { SITE_CDN } from "../consts";
-
 import type { CollectionEntry } from "astro:content";
-import $getReadingTime from "../utils/getReadingTime";
+import DateTime from "@/components/DateTime.astro";
+import Comments from "@/components/Comments.astro";
+import ShareArticleButton from "@/components/ShareArticleButton.astro";
+import Tag from "@/components/Tag.astro";
+import $getReadingTime from "@/utils/getReadingTime";
+import { slugifyStr } from '@/utils/slugify';
+import Layout from "./BaseLayout.astro";
+import { SITE_TITLE, SITE_CDN } from "../consts";
+import type { HeadTags } from '../types';
+
+import "@/styles/post.css";
 
 export interface Props {
-  post: CollectionEntry<"blog">;
+  post: CollectionEntry<"posts">;
 }
 
 const { post } = Astro.props;
@@ -22,27 +23,34 @@ const minutesRead = $getReadingTime(post.body);
 const {
   title,
   author,
-  authorImg,
   description,
   heroImage,
-  pubDate,
-  postSlug,
-  updatedDate,
+  publishedAt,
+  updatedAt,
   tags,
 } = post.data;
 
-const slug = postSlug || post.slug;
+const slug = slugifyStr(title) || post.slug;
 
 const { Content } = await post.render();
 
 const ogImage = SITE_CDN + heroImage;
 
-const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
+const ogUrl = new URL(`/posts/${slug}`, Astro.url.origin).href;
+
+const data: HeadTags = {
+  title: `${title} - ${SITE_TITLE}`,
+  description: `${description}`,
+  og: {
+    title: `${title} - ${SITE_TITLE}`,
+    description: `${description}`,
+    image: ogImage,
+  },
+}
 ---
 
-<PageLayout>
-  <BaseHead title={`${title} | Blog - Daniel Brai`} description={description} image={ogImage} />
-  <Fragment slot="main">
+<Layout {...data}>
+  <main>
     <div class="relative">
       <button 
         onclick="document.querySelector('html').scrollIntoView({ behaviour: 'smooth' })" 
@@ -71,23 +79,21 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
         <h1 class="post-title">{title}</h1>
         <div class="flex flex-col space-y-2">
           <div>
-            <p class="text-sm sm:text-lg">
+            <p class="text-sm" title={`Published by ${author}`}>
               By
-              <LinkButton href="/about" title={`Published by ${author}`}>
-                <span class="underline underline-offset-2">
-                  {author}
-                </span>
-              </LinkButton>
+              <span class="underline underline-offset-2">
+                {author}
+              </span>
             </p>
           </div>
           <div class="mt-2 flex items-center space-x-2">
             <div>
               {
-                !updatedDate ? (
+                !updatedAt ? (
                   <DateTime
-                    date={pubDate}
+                    date={publishedAt}
                     otherClasses={"text-xs sm:text-sm cursor-pointer"}
-                    label={`Published on ${pubDate.toLocaleDateString(
+                    label={`Published on ${publishedAt.toLocaleDateString(
                       "en-GB",
                       {
                         year: "numeric",
@@ -98,9 +104,9 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
                   />
                 ) : (
                   <DateTime
-                    date={updatedDate}
+                    date={updatedAt}
                     otherClasses={"text-xs sm:text-sm cursor-pointer"}
-                    label={`Updated on ${pubDate.toLocaleDateString("en-GB", {
+                    label={`Updated on ${publishedAt.toLocaleDateString("en-GB", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
@@ -125,10 +131,10 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
           </div>
         </div>
         <div class="mt-5">
-          <img src={ogImage} alt="Article's Hero Image" loading="eager" />
+          <img class="w-full h-[200px] sm:h-[400px] object-cover" src={ogImage} alt={`${title} image`} loading="eager" />
           <div class="mt-4 flex flex-col justify-center space-y-2"></div>
         </div>
-        <article id="article" role="article" class="mt-8">
+        <article id="article" role="article" class="mt-8 post">
           <Content />
         </article>
 
@@ -154,8 +160,8 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
         </div>
       </section>
     </div>
-  </Fragment>
-</PageLayout>
+  </main>
+</Layout>
 
 <script is:inline>
   const ps = document.querySelectorAll("p");
@@ -167,7 +173,6 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
   const code_containers = document.querySelectorAll("pre");
   const code_blocks = document.querySelectorAll("pre code");
 
-  let isCopied = false;
   const copybtns = document.querySelectorAll(".code-copy-btn");
   const copyIcon =
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFFFFF"><path d="M20 2H10c-1.103 0-2 .897-2 2v4H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2v-4h4c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zM4 20V10h10l.002 10H4zm16-6h-4v-4c0-1.103-.897-2-2-2h-4V4h10v10z"/></svg>';
@@ -176,16 +181,17 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
 
   code_blocks.forEach((cb) => {
     cb.style.fontFamily = "Roboto mono";
-    cb.style.fontSize = "16px";
+    cb.style.fontSize = "14px";
     cb.style.position = "relative";
     cb.style.top = "-16px";
   });
 
+  // let isCopied = false;
   copybtns.forEach((copybtn) => {
     if (copybtn !== null) {
       copybtn.addEventListener("click", async () => {
         let div = copybtn.parentNode;
-        isCopied = true;
+        // isCopied = true;
         const range = document.createRange();
         range.selectNode(div);
         window.getSelection().addRange(range);
@@ -203,7 +209,7 @@ const ogUrl = new URL(`/blog/${slug}`, Astro.url.origin).href;
         window.getSelection().removeAllRanges();
 
         setTimeout(() => {
-          isCopied = false;
+          // isCopied = false;
           copybtn.innerHTML = copyIcon;
         }, 1500);
       });

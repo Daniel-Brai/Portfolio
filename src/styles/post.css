@@ -31,9 +31,9 @@
 }
 
 .post pre {
-  @apply p-4;
+  @apply p-2;
 }
 
 .post pre > code {
-  @apply bg-transparent;
+  @apply bg-transparent text-sm;
 }

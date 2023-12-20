@@ -1,0 +1,82 @@
+---
+import type { HeadTags } from '@/types'
+import * as astro from "astro:content";
+import Layout from "@/layouts/BaseLayout.astro";
+import PostCard from "@/components/PostCard.astro";
+import getUniqueTags from "@/utils/getUniqueTags";
+import getPostsByTag from "@/utils/getPostsByTag";
+import { slugifyPost } from "@/utils/slugify";
+import { SITE_TITLE } from "@/consts";
+
+export interface Props {
+  post: astro.CollectionEntry<"posts">;
+  tag: string;
+}
+
+export async function getStaticPaths() {
+  const posts = await astro.getCollection("posts");
+
+  const tags = getUniqueTags(posts);
+
+  return tags.map((tag) => {
+    return {
+      params: { tag },
+      props: { tag },
+    };
+  });
+}
+
+const { tag } = Astro.props;
+
+const posts = await astro.getCollection("posts", ({ data }) => !data.isDraft);
+
+const tagPosts = getPostsByTag(posts, tag);
+
+const data: HeadTags = {
+  title: `Tags: ${tag} - ${SITE_TITLE}`,
+  description: `All posts with the related tag - ${tag}`,
+  og: {
+    title: `Tags: ${tag} - ${SITE_TITLE}`,
+    description: `All posts with the related tag - ${tag}`,
+  },
+}
+---
+
+<Layout {...data}>
+  <main>
+    <div>
+      <button 
+        onclick="document.querySelector('html').scrollIntoView({ behaviour: 'smooth' })" 
+        title="Scroll to top" 
+        id="stt-btn"
+        class="p-1 border border-gray-800 dark:border-white fixed bottom-10 right-2 sm:right-4 md:right-10 z-20 rounded-lg"
+      >
+        <svg class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M13 18v-6h5l-6-7-6 7h5v6z"/></svg>
+      </button>
+      <button
+        class="focus-outline mt-8 mb-3 flex items-center hover:opacity-75"
+        onclick="history.back()"
+      >
+        <svg
+          class="dark:fill-white"
+          width="24"
+          height="24"
+          xmlns="http://www.w3.org/2000/svg"
+          ><path
+            d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+          ></path>
+        </svg>
+        <span>Go back</span>
+      </button>
+      <h1 class="mt-7 text-3xl font-medium">Tags - {tag}</h1>
+      <p class="mt-8 text-sm">All Posts with the tag - {tag}</p>
+      <ul class="my-8 flex flex-col space-y-6">
+        {
+          tagPosts.map(({ data }) => (
+            <PostCard href={`/posts/${slugifyPost(data)}`} title={data.title} desc={data.description} fullWidth />
+          ))
+        }
+      </ul>
+    </div>
+  </main>
+</Layout>

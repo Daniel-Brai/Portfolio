@@ -15,7 +15,7 @@ const presentation: Presentation = {
   mail: "danielbrai.dev@gmail.com",
   title: "👋 Hi, I’m Daniel",
   description:
-    "I'm a *Nigerian backend developer* with *1 year* of web experience. I am currently working with *Node JS and Typescript*. Outside of work I read mangas and continue learning Golang & Rust.",
+    "I'm a *Nigerian Software Engineer* with *1 year* of experience. I am currently working with *Node.js and Typescript, Golang and Elixir*. Outside programming, I like to read mangas, novels, watch anime, and research on the latest technological advancements.",
   socials: [
     {
       label: "X",
@@ -34,6 +34,7 @@ const presentation: Presentation = {
       link: '/resume.pdf'
     }
   ],
+  profile: ""
 };
 
 export default presentation;

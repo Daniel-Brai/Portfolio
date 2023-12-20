@@ -1,6 +1,6 @@
 ---
 import Link from "./Link.astro";
-import presentation from "../data/presentation";
+import presentation from "@/data/presentation";
 ---
 
 <ul role="list" class="flex flex-row gap-2">
@@ -8,7 +8,7 @@ import presentation from "../data/presentation";
     presentation.socials.map((social, index) => (
       <>
         <li>
-          <Link href={social.link} label={social.label} />
+          <Link href={social.link} label={social.label} title={`Daniel Brai's ${social.label}`} aria-label={`Daniel Brai's ${social.label}`} />
         </li>
 
         {presentation.socials.length - 1 !== index && <li>/</li>}

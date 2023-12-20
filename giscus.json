@@ -1,4 +1,4 @@
 {
-  "origins": ["http://localhost:3000","https://danielbrai.netlify.app","https://danielbrai.me","https://www.danielbrai.me"],
+  "origins": ["http://localhost:4321","https://danielbrai.netlify.app","https://danielbrai.me","https://www.danielbrai.me"],
   "defaultCommentOrder": "newest"
 }

@@ -55,7 +55,7 @@
               Visit Website &#x2192;
             </a>
           </header>
-          <h2>Recent Articles</h2>
+          <h2>Recent Posts</h2>
           <xsl:for-each select="/rss/channel/item">
             <div class="pb-5">
               <h3 class="mb-0">

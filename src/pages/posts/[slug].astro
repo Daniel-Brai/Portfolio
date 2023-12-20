@@ -1,20 +1,20 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
-import BaseHead from "../../components/BaseHead.astro";
-import Posts from "../../components/Posts.astro";
-import PageLayout from "../../layouts/PageLayout.astro";
-import PostDetails from "../../layouts/PostDetails.astro";
-import getSortedPosts from "../../utils/getSortedPosts";
-import getPageNumbers from "../../utils/getPageNumber";
-import { slugifyPost } from "../../utils/slugify";
+import type { HeadTags } from '@/types';
+import * as astro from "astro:content";
+import Posts from "@/components/Posts.astro";
+import Layout from "@/layouts/BaseLayout.astro";
+import PostDetails from "@/layouts/PostDetails.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import getPageNumbers from "@/utils/getPageNumber";
+import { slugifyPost } from "@/utils/slugify";
 import { SITE_TITLE, SITE_CDN, POSTS_PER_PAGE } from "../../consts";
 
 export interface Props {
-  post: CollectionEntry<"blog">;
+  post: astro.CollectionEntry<"posts">;
 }
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = await astro.getCollection("posts", ({ data }) => !data.isDraft);
 
   const postResult = posts.map((post) => ({
     params: { slug: slugifyPost(post.data) },
@@ -31,7 +31,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { post } = Astro.props;
 
-const posts = await getCollection("blog");
+const posts = await astro.getCollection("posts");
 
 const sortedPosts = getSortedPosts(posts);
 
@@ -46,28 +46,29 @@ const startPost = lastPost - POSTS_PER_PAGE;
 
 const paginatedPosts = sortedPosts.slice(startPost, lastPost);
 
-const ogImage = SITE_CDN + 'social-share.png';
+const data: HeadTags = {
+  title: `Posts - ${SITE_TITLE}`,
+  description: "Mastering Software Engineering one post at a time",
+  og: {
+    title: `Posts - ${SITE_TITLE}`,
+    description: "Mastering Software Engineering one post at a time",
+    image: "/daniel-brai-posts.png",
+  },
+}
 ---
 
 {
   post ? (
     <PostDetails post={post} />
   ) : (
-    <PageLayout>
-      <BaseHead
-        title={`Blog | ${SITE_TITLE}`}
-        description={
-          "A repository of all the things I love as an aspiring Software Engineer"
-        }
-        image={ogImage}
-      />
-      <Fragment slot="main">
+    <Layout {...data}>
+      <main>
         <Posts
           posts={paginatedPosts}
           pageNum={currentPage}
           totalPages={totalPages.length}
         />
-      </Fragment>
-    </PageLayout>
+      </main>
+    </Layout>
   )
 }

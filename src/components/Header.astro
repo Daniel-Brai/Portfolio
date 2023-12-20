@@ -31,6 +31,16 @@ const pathname = removeTrailingSlash(Astro.url.pathname);
           }}>Posts</a
         >
       </li>
+      <li>/</li>
+      <li>
+        <a
+          href="/rss.xml"
+          class:list={{
+            ["hover:text-neutral-100"]: true,
+            ["text-neutral-100"]: pathname === "/rss.xml",
+          }}>RSS</a
+        >
+      </li>
     </ul>
   </nav>
 </header>

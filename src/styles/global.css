@@ -15,10 +15,6 @@
     ::-webkit-scrollbar-thumb {
         @apply bg-gray-200 rounded-full;
     }
-
-    html.dark ::-webkit-scrollbar-thumb {
-        @apply bg-neutral-700 rounded-full;
-    }
 }
 
 @layer utilities {

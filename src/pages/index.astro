@@ -52,10 +52,10 @@ const data: HeadTags = {
           {presentation.title}
         </h1>
 
-        <h2
-          class="w-auto max-w-[60ch] leading-6"
+        <div
+          class="w-auto max-w-[90ch] leading-6"
           set:html={convertAsteriskToStrongTag(presentation.description)}
-        />
+        ></div>
 
         <SocialLinks />
       </div>
@@ -102,12 +102,12 @@ const data: HeadTags = {
 
     <article class="flex flex-col gap-8">
       <header class="flex w-full flex-row justify-between gap-2">
-        <h3 class="text-lg text-neutral-100">Get in touch</h3>
+        <h3 class="text-lg text-neutral-100">Let's Connect</h3>
       </header>
       <p>
         Email me at <Link
-          href={`mailto:${presentation.mail}`}
-          label={presentation.mail}
+          href={`mailto:${presentation.mail.trim()}`}
+          label={presentation.mail.trim()}
         /> or follow me via my social links.
       </p>
 

@@ -12,13 +12,13 @@ const projects: Project[] = [
     link: "https://github.com/Daniel-Brai/Sendwave",
   },
   {
-    title: "Task rabbit",
-    techs: ["Django", "Bootstrap", "Firebase"],
-    link: "https://github.com/Daniel-Brai/Task-Rabbit",
+    title: "Jetei",
+    techs: ["NestJS", "PostgreSQL", "HTMX"],
+    link: "https://github.com/Daniel-Brai/Jetei",
   },
   {
-    title: "Transcode",
-    techs: ["Astro", "NestJS", "FFmpeg"],
+    title: "Mesh",
+    techs: ["Phoenix", "PostgreSQL", "Rust"],
     link: "/",
     isComingSoon: true,
   },

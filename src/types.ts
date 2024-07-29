@@ -4,10 +4,10 @@ export type HeadTags = {
   noindex?: boolean;
   og?: {
     title: string;
-    type: string;
+    type?: string;
     description: string;
-    image: string;
-    alt: string;
+    image?: string;
+    alt?: string;
   };
 };
 

@@ -5,6 +5,7 @@ type Social = {
 
 type Presentation = {
   mail: string;
+  name: string,
   title: string;
   description: string;
   socials: Social[];
@@ -27,7 +28,7 @@ const presentation: Presentation = {
       link: "https://www.linkedin.com/in/daniel-brai-12baa21a3/",
     },
     {
-      label: "Github",
+      label: "GitHub",
       link: "https://github.com/Daniel-Brai",
     },
     {
